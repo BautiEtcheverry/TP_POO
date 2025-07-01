@@ -1,6 +1,7 @@
 package frontend;
 
 import backend.CanvasState;
+import backend.Drawers;
 import backend.model.*;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -47,6 +48,8 @@ public class PaintPane extends BorderPane {
 	// Seleccionar una figura
 	private Figure selectedFigure;
 
+	//Clase para dibujar figuras
+	private final Drawers drawer = new JFXDrawer(gc);
 
 	// StatusBar
 	private final StatusPane statusPane;
@@ -89,19 +92,25 @@ public class PaintPane extends BorderPane {
 			}
 			Figure newFigure = null;
 
+			//ESTO HAY QUE CAMBIARLO ES MUY IMPERATIVO.
+
 			if (rectangleButton.isSelected()) {
 				newFigure = new Rectangle(startPoint, endPoint);
+				newFigure.setDrawer(drawer); //CAMBIAR!!!
 			} else if (circleButton.isSelected()) {
 				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
 				newFigure = new Circle(startPoint, circleRadius);
+				newFigure.setDrawer(drawer); //CAMBIAR!!!
 			} else if (squareButton.isSelected()) {
 				double size = Math.abs(endPoint.getX() - startPoint.getY());
 				newFigure = new Square(startPoint, size);
+				newFigure.setDrawer(drawer); //CAMBIAR!!!
 			} else if (ellipseButton.isSelected()) {
 				Point centerPoint = new Point(Math.abs(endPoint.getX() + startPoint.getX()) / 2, (Math.abs((endPoint.getY() + startPoint.getY())) / 2));
 				double sMayorAxis = Math.abs(endPoint.getX() - startPoint.getX());
 				double sMinorAxis = Math.abs(endPoint.getY() - startPoint.getY());
 				newFigure = new Ellipse(centerPoint, sMayorAxis, sMinorAxis);
+				newFigure.setDrawer(drawer); //CAMBIAR!!!
 			} else {
 				return;
 			}
@@ -236,15 +245,15 @@ public class PaintPane extends BorderPane {
 			}
 
 			gc.setFill(fillColorPicker.getValue());
-			figure.drawSelf(gc);
+			figure.drawSelf();
 
 			if(figure.hasLightening()) {
 				gc.setFill(CLARIFICATION);
-				figure.drawSelf(gc);
+				figure.drawSelf();
 			}
 			if(figure.hasDarkening()) {
 				gc.setFill(DARKENING);
-				figure.drawSelf(gc);
+				figure.drawSelf();
 			}
 		}
 	}

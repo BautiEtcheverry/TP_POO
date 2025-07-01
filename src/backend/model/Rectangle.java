@@ -11,11 +11,8 @@ public class Rectangle extends Figure {
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
     }
-    public void drawSelf(GraphicsContext gc){
-        gc.fillRect(getTopLeft().getX(), getTopLeft().getY(),
-                Math.abs(getTopLeft().getX() - getBottomRight().getX()), Math.abs(getTopLeft().getY() - getBottomRight().getY()));
-        gc.strokeRect(getTopLeft().getX(), getTopLeft().getY(),
-                Math.abs(getTopLeft().getX() - getBottomRight().getX()), Math.abs(getTopLeft().getY() - getBottomRight().getY()));
+    public void drawSelf(){
+        getDrawer().drawRectangle(topLeft,bottomRight);
     }
     public void move(double diffX, double diffY){
         getTopLeft().changeX(diffX);

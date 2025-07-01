@@ -7,11 +7,8 @@ public class Square extends Rectangle {
     public Square(Point topLeft, double size) {
        super(topLeft,new Point(topLeft.getX() + size, topLeft.getY() + size));
     }
-    public void drawSelf(GraphicsContext gc){
-        gc.fillRect(getTopLeft().getX(), getTopLeft().getY(),
-                Math.abs(getTopLeft().getX() - getBottomRight().getX()), Math.abs(getTopLeft().getY() - getBottomRight().getY()));
-        gc.strokeRect(getTopLeft().getX(), getTopLeft().getY(),
-                Math.abs(getTopLeft().getX() - getBottomRight().getX()), Math.abs(getTopLeft().getY() - getBottomRight().getY()));
+    public void drawSelf(){
+        getDrawer().drawRectangle(getTopLeft(),getBottomRight());
     }
     public Point getTopLeft() {
         return super.getTopLeft();

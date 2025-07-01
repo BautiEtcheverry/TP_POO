@@ -9,10 +9,10 @@ public class Circle extends Ellipse {
         super(centerPoint, 2 * radius, 2 * radius);
     }
 
-    public void drawSelf(GraphicsContext gc){
+    public void drawSelf(){
         double diameter = getRadius() * 2;
-        gc.fillOval(getCenterPoint().getX() - getRadius(), getCenterPoint().getY() - getRadius(), diameter, diameter);
-        gc.strokeOval(getCenterPoint().getX() - getRadius(), getCenterPoint().getY() - getRadius(), diameter, diameter);
+        getDrawer().drawEllipse(centerPoint, diameter,diameter);
+
     }
 
     @Override

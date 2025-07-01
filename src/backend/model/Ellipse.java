@@ -13,9 +13,8 @@ public class Ellipse extends Figure {
         this.sMinorAxis = sMinorAxis;
     }
 
-    public void drawSelf(GraphicsContext gc){
-        gc.strokeOval(getCenterPoint().getX() - (getsMayorAxis() / 2), getCenterPoint().getY() - (getsMinorAxis() / 2), getsMayorAxis(), getsMinorAxis());
-        gc.fillOval(getCenterPoint().getX() - (getsMayorAxis() / 2), getCenterPoint().getY() - (getsMinorAxis() / 2), getsMayorAxis(), getsMinorAxis());
+    public void drawSelf(){
+        getDrawer().drawEllipse(centerPoint, sMayorAxis,sMinorAxis);
     }
 
     public void drawVerticalMirror(GraphicsContext gc){
@@ -23,7 +22,7 @@ public class Ellipse extends Figure {
         double mirroredY = canvasHeight - centerPoint.getY();
         Point mirroredCenter = new Point(centerPoint.getX(), mirroredY);
         Ellipse mirrored = new Ellipse(mirroredCenter, sMayorAxis, sMinorAxis);
-        mirrored.drawSelf(gc);
+        mirrored.drawSelf();
     }
 
     @Override

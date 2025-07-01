@@ -1,7 +1,9 @@
 package backend.model;
 
+import backend.Drawers;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import jdk.swing.interop.DragSourceContextWrapper;
 
 import javax.swing.text.ElementIterator;
 import java.util.HashMap;
@@ -13,9 +15,18 @@ public abstract class Figure {
     private boolean hMirroring;
     private boolean vMirroring;
 
+    //Instancia de una interfaz que debe de ser implementada por el front para dibujar las figuras.
+    private Drawers drawer;
+    protected Drawers getDrawer(){return drawer;}
+
+    //ESTO HAY QUE CAMBIARLO
+    public void setDrawer(Drawers drawer){
+        this.drawer=drawer;
+    }
+
 
     //Metodo para que cada figura se dibuje en el canvas 2d.
-    public abstract void drawSelf(GraphicsContext gc);
+    public abstract void drawSelf();
 
     public boolean hasLightening(){
         return lightening;
