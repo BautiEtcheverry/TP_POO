@@ -34,7 +34,7 @@ public class PaintPane extends BorderPane {
 	private final ToggleButton deleteButton = new ToggleButton("Borrar");
 
 	// Selector de color de relleno
-	private final ColorPicker fillColorPicker = new ColorPicker(Color.getY()ELLOW);
+	private final ColorPicker fillColorPicker = new ColorPicker(Color.YELLOW);
 
 	// Dibujar una figura
 	private Point startPoint;
@@ -79,13 +79,13 @@ public class PaintPane extends BorderPane {
 				newFigure = new Rectangle(startPoint, endPoint);
 			}
 			else if(circleButton.isSelected()) {
-				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX);
+				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
 				newFigure = new Circle(startPoint, circleRadius);
 			} else if(squareButton.isSelected()) {
 				double size = Math.abs(endPoint.getX() - startPoint.getY());
 				newFigure = new Square(startPoint, size);
 			} else if(ellipseButton.isSelected()) {
-				Point centerPoint = new Point(Math.abs(endPoint.getX + startPoint.getX()) / 2, (Math.abs((endPoint.getY() + startPoint.getY())) / 2));
+				Point centerPoint = new Point(Math.abs(endPoint.getX() + startPoint.getX()) / 2, (Math.abs((endPoint.getY() + startPoint.getY())) / 2));
 				double sMayorAxis = Math.abs(endPoint.getX() - startPoint.getX());
 				double sMinorAxis = Math.abs(endPoint.getY() - startPoint.getY());
 				newFigure = new Ellipse(centerPoint, sMayorAxis, sMinorAxis);
@@ -142,21 +142,21 @@ public class PaintPane extends BorderPane {
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
 				if(selectedFigure instanceof Rectangle rectangle) {
-                    rectangle.getTopLeft().getX() += diffX;
-					rectangle.getBottomRight().getX() += diffX;
-					rectangle.getTopLeft().getY() += diffY;
-					rectangle.getBottomRight().getY() += diffY;
+                    rectangle.getTopLeft().changeX(diffX);
+					rectangle.getBottomRight().changeX(diffX);
+					rectangle.getTopLeft().changeY(diffY);
+					rectangle.getBottomRight().changeY(diffY);
 				} else if(selectedFigure instanceof Circle circle) {
-                    circle.getCenterPoint().getX() += diffX;
-					circle.getCenterPoint().getY() += diffY;
+                    circle.getCenterPoint().changeX(diffX);
+					circle.getCenterPoint().changeY(diffY);
 				} else if(selectedFigure instanceof Square square) {
-                    square.getTopLeft().getX() += diffX;
-					square.getBottomRight().getX() += diffX;
-					square.getTopLeft().getY() += diffY;
-					square.getBottomRight().getY() += diffY;
+                    square.getTopLeft().changeX(diffX);
+					square.getBottomRight().changeX(diffX);
+					square.getTopLeft().changeY(diffY);
+					square.getBottomRight().changeY(diffY);
 				} else if(selectedFigure instanceof Ellipse ellipse) {
-                    ellipse.getCenterPoint().getX() += diffX;
-					ellipse.getCenterPoint().getY() += diffY;
+                    ellipse.getCenterPoint().changeX(diffX);
+					ellipse.getCenterPoint().changeY(diffY);
 				}
 				redrawCanvas();
 			}

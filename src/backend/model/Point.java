@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Point {
 
-    private final double x, y;
+    private double x, y;
 
     public Point(double x, double y) {
         this.x = x;
@@ -17,6 +17,13 @@ public class Point {
 
     public double getY(){
         return y;
+    }
+
+    public void changeX(double x){
+        this.x += x;
+    }
+    public void changeY(double y){
+        this.y += y;
     }
 
     @Override
