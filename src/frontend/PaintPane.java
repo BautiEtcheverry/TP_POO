@@ -149,13 +149,18 @@ public class PaintPane extends BorderPane {
 				if (found) {
 					lighteningCheckBox.setSelected(selectedFigure.hasLightening());
 					darkeningCheckBox.setSelected(selectedFigure.hasDarkening());
+					hMirroringCheckBox.setSelected(selectedFigure.hasHMirroring());
+					vMirroringCheckBox.setSelected(selectedFigure.hasVMirroring());
 					statusPane.updateStatus(label.toString());
 				} else {
 					selectedFigure = null;
 					lighteningCheckBox.setSelected(false);
 					darkeningCheckBox.setSelected(false);
+					hMirroringCheckBox.setSelected(false);
+					vMirroringCheckBox.setSelected(false);
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
+
 				redrawCanvas();
 			}
 		});
@@ -216,6 +221,21 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			}
 		});
+
+		hMirroringCheckBox.setOnAction(event ->{
+			if(selectedFigure != null){
+				selectedFigure.sethMirroring(hMirroringCheckBox.isSelected());
+			}
+			redrawCanvas();
+		});
+
+		vMirroringCheckBox.setOnAction(event ->{
+			if(selectedFigure != null){
+				selectedFigure.setvMirroring(vMirroringCheckBox.isSelected());
+			}
+			redrawCanvas();
+		});
+
 		setLeft(buttonsBox);
 		setRight(canvas);
 	}
