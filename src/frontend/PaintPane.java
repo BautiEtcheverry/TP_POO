@@ -76,7 +76,7 @@ public class PaintPane extends BorderPane {
 		CheckBox vMirroring = new CheckBox("Espejo Vertical");
 		effectBar.getChildren().addAll(new Label("Efectos:"), lightening, darkening, hMirroring, vMirroring);
 		effectBar.setPadding(new Insets(5));
-		effectBar.setStyle("-fx-background-color: #969696;");
+		effectBar.setStyle("-fx-background-color: #999;");
 		setTop(effectBar);
 
 
