@@ -13,11 +13,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.geometry.Insets;
-
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class PaintPane extends BorderPane {
 	// BackEnd
@@ -26,7 +21,6 @@ public class PaintPane extends BorderPane {
 	//Constantes para el funcionamiento del aclaramiento y el oscuresimiento
 	private static final Color CLARIFICATION = Color.rgb(255, 255, 255, 0.7);
 	private static final Color DARKENING = Color.rgb(0, 0, 0, 0.7);
-	;
 
 	// Canvas y relacionados
 	private final Canvas canvas = new Canvas(800, 600);
@@ -144,12 +138,14 @@ public class PaintPane extends BorderPane {
 						label.append(figure.toString());
 					}
 				}
+
 				if (found) {
 					statusPane.updateStatus(label.toString());
 				} else {
 					selectedFigure = null;
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
+
 				if (found) {
 					lighteningCheckBox.setSelected(selectedFigure.hasLightening());
 					darkeningCheckBox.setSelected(selectedFigure.hasDarkening());
@@ -186,6 +182,7 @@ public class PaintPane extends BorderPane {
 					ellipse.getCenterPoint().changeX(diffX);
 					ellipse.getCenterPoint().changeY(diffY);
 				}
+
 				redrawCanvas();
 			}
 		});
@@ -233,16 +230,17 @@ public class PaintPane extends BorderPane {
 			} else {
 				gc.setStroke(Color.BLACK);
 			}
+
 			gc.setFill(fillColorPicker.getValue());
-			figure.drawSelf(gc); // Dibujo base
+			figure.drawSelf(gc);
 
 			if(figure.hasLightening()) {
 				gc.setFill(CLARIFICATION);
-				figure.drawSelf(gc); // efecto de aclaramiento
+				figure.drawSelf(gc);
 			}
 			if(figure.hasDarkening()) {
 				gc.setFill(DARKENING);
-				figure.drawSelf(gc); // efecto de oscurecimiento
+				figure.drawSelf(gc);
 			}
 		}
 	}
