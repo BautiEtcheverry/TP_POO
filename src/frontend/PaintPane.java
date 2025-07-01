@@ -88,6 +88,7 @@ public class PaintPane extends BorderPane {
 				return;
 			}
 			Figure newFigure = null;
+
 			if (rectangleButton.isSelected()) {
 				newFigure = new Rectangle(startPoint, endPoint);
 			} else if (circleButton.isSelected()) {
@@ -104,7 +105,13 @@ public class PaintPane extends BorderPane {
 			} else {
 				return;
 			}
+
+			newFigure.setLightening(lighteningCheckBox.isSelected());
+			newFigure.setDarkening(darkeningCheckBox.isSelected());
+			newFigure.sethMirroring(hMirroringCheckBox.isSelected());
+			newFigure.setvMirroring(vMirroringCheckBox.isSelected());
 			canvasState.addFigure(newFigure);
+
 			startPoint = null;
 			redrawCanvas();
 		});

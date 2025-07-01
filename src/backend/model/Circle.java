@@ -8,6 +8,7 @@ public class Circle extends Ellipse {
     public Circle(Point centerPoint, double radius) {
         super(centerPoint, 2 * radius, 2 * radius);
     }
+
     public void drawSelf(GraphicsContext gc){
         double diameter = getRadius() * 2;
         gc.fillOval(getCenterPoint().getX() - getRadius(), getCenterPoint().getY() - getRadius(), diameter, diameter);

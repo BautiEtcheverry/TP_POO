@@ -17,6 +17,7 @@ public class Rectangle extends Figure {
         gc.strokeRect(getTopLeft().getX(), getTopLeft().getY(),
                 Math.abs(getTopLeft().getX() - getBottomRight().getX()), Math.abs(getTopLeft().getY() - getBottomRight().getY()));
     }
+
     public Point getTopLeft() {
         return topLeft;
     }
