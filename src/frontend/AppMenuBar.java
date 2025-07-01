@@ -34,3 +34,4 @@ public class AppMenuBar extends MenuBar {
     }
 
 }
+
