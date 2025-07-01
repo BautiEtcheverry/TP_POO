@@ -6,7 +6,7 @@ public class Square implements Figure {
 
     public Square(Point topLeft, double size) {
         this.topLeft = topLeft;
-        this.bottomRight = new Point(topLeft.x + size, topLeft.y + size);
+        this.bottomRight = new Point(topLeft.getX() + size, topLeft.getY() + size);
     }
 
     public Point getTopLeft() {
