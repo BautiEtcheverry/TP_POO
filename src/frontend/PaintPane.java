@@ -6,25 +6,27 @@ import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.geometry.Insets;
+
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class PaintPane extends BorderPane {
-
 	// BackEnd
 	private final CanvasState canvasState;
 
 	//Constantes para el funcionamiento del aclaramiento y el oscuresimiento
-	private static final Color CLARIFICATION =  Color.rgb(255,255,255,0.7);
-	private static final Color DARKENING =  Color.rgb(0,0,0,0.7);;
+	private static final Color CLARIFICATION = Color.rgb(255, 255, 255, 0.7);
+	private static final Color DARKENING = Color.rgb(0, 0, 0, 0.7);
+	;
 
 	// Canvas y relacionados
 	private final Canvas canvas = new Canvas(800, 600);
@@ -47,6 +49,7 @@ public class PaintPane extends BorderPane {
 	// Seleccionar una figura
 	private Figure selectedFigure;
 
+
 	// StatusBar
 	private final StatusPane statusPane;
 
@@ -67,35 +70,45 @@ public class PaintPane extends BorderPane {
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
 
+		HBox effectBar = new HBox(10);
+		CheckBox lighteningCheckBox = new CheckBox("Aclaramiento");
+		CheckBox darkeningCheckBox = new CheckBox("Oscurecimiento");
+		CheckBox hMirroringCheckBox = new CheckBox("Espejo Horizontal");
+		CheckBox vMirroringCheckBox = new CheckBox("Espejo Vertical");
+		effectBar.getChildren().addAll(new Label("Efectos:"), lighteningCheckBox, darkeningCheckBox, hMirroringCheckBox, vMirroringCheckBox);
+		effectBar.setPadding(new Insets(5));
+		effectBar.setStyle("-fx-background-color: #999;");
+		setTop(effectBar);
+
+
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
 		});
 
 		canvas.setOnMouseReleased(event -> {
 			Point endPoint = new Point(event.getX(), event.getY());
-			if(startPoint == null) {
-				return ;
+			if (startPoint == null) {
+				return;
 			}
-			if(endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
-				return ;
+			if (endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
+				return;
 			}
 			Figure newFigure = null;
-			if(rectangleButton.isSelected()) {
+			if (rectangleButton.isSelected()) {
 				newFigure = new Rectangle(startPoint, endPoint);
-			}
-			else if(circleButton.isSelected()) {
+			} else if (circleButton.isSelected()) {
 				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
 				newFigure = new Circle(startPoint, circleRadius);
-			} else if(squareButton.isSelected()) {
+			} else if (squareButton.isSelected()) {
 				double size = Math.abs(endPoint.getX() - startPoint.getY());
 				newFigure = new Square(startPoint, size);
-			} else if(ellipseButton.isSelected()) {
+			} else if (ellipseButton.isSelected()) {
 				Point centerPoint = new Point(Math.abs(endPoint.getX() + startPoint.getX()) / 2, (Math.abs((endPoint.getY() + startPoint.getY())) / 2));
 				double sMayorAxis = Math.abs(endPoint.getX() - startPoint.getX());
 				double sMinorAxis = Math.abs(endPoint.getY() - startPoint.getY());
 				newFigure = new Ellipse(centerPoint, sMayorAxis, sMinorAxis);
 			} else {
-				return ;
+				return;
 			}
 			canvasState.addFigure(newFigure);
 			startPoint = null;
@@ -106,13 +119,13 @@ public class PaintPane extends BorderPane {
 			Point eventPoint = new Point(event.getX(), event.getY());
 			boolean found = false;
 			StringBuilder label = new StringBuilder();
-			for(Figure figure : canvasState.figures()) {
-				if(figureBelongs(figure, eventPoint)) {
+			for (Figure figure : canvasState.figures()) {
+				if (figureBelongs(figure, eventPoint)) {
 					found = true;
 					label.append(figure.toString());
 				}
 			}
-			if(found) {
+			if (found) {
 				statusPane.updateStatus(label.toString());
 			} else {
 				statusPane.updateStatus(eventPoint.toString());
@@ -120,12 +133,12 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseClicked(event -> {
-			if(selectionButton.isSelected()) {
+			if (selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				for (Figure figure : canvasState.figures()) {
-					if(figureBelongs(figure, eventPoint)) {
+					if (figureBelongs(figure, eventPoint)) {
 						found = true;
 						selectedFigure = figure;
 						label.append(figure.toString());
@@ -137,15 +150,14 @@ public class PaintPane extends BorderPane {
 					selectedFigure = null;
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
-
 				if (found) {
-					lightenCheckBox.setSelected(selectedFigure.hasLightening());
-					darkenCheckBox.setSelected(selectedFigure.hasDarkening());
+					lighteningCheckBox.setSelected(selectedFigure.hasLightening());
+					darkeningCheckBox.setSelected(selectedFigure.hasDarkening());
 					statusPane.updateStatus(label.toString());
 				} else {
 					selectedFigure = null;
-					lightenCheckBox.setSelected(false);
-					darkenCheckBox.setSelected(false);
+					lighteningCheckBox.setSelected(false);
+					darkeningCheckBox.setSelected(false);
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
 				redrawCanvas();
@@ -153,25 +165,25 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseDragged(event -> {
-			if(selectionButton.isSelected()) {
+			if (selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				if(selectedFigure instanceof Rectangle rectangle) {
-                    rectangle.getTopLeft().changeX(diffX);
+				if (selectedFigure instanceof Rectangle rectangle) {
+					rectangle.getTopLeft().changeX(diffX);
 					rectangle.getBottomRight().changeX(diffX);
 					rectangle.getTopLeft().changeY(diffY);
 					rectangle.getBottomRight().changeY(diffY);
-				} else if(selectedFigure instanceof Circle circle) {
-                    circle.getCenterPoint().changeX(diffX);
+				} else if (selectedFigure instanceof Circle circle) {
+					circle.getCenterPoint().changeX(diffX);
 					circle.getCenterPoint().changeY(diffY);
-				} else if(selectedFigure instanceof Square square) {
-                    square.getTopLeft().changeX(diffX);
+				} else if (selectedFigure instanceof Square square) {
+					square.getTopLeft().changeX(diffX);
 					square.getBottomRight().changeX(diffX);
 					square.getTopLeft().changeY(diffY);
 					square.getBottomRight().changeY(diffY);
-				} else if(selectedFigure instanceof Ellipse ellipse) {
-                    ellipse.getCenterPoint().changeX(diffX);
+				} else if (selectedFigure instanceof Ellipse ellipse) {
+					ellipse.getCenterPoint().changeX(diffX);
 					ellipse.getCenterPoint().changeY(diffY);
 				}
 				redrawCanvas();
@@ -186,30 +198,29 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
-		lightenCheckBox.setOnAction(event -> {
+		lighteningCheckBox.setOnAction(event -> {
 			if (selectedFigure != null) {
-				selectedFigure.setLightening(lightenCheckBox.isSelected());
+				selectedFigure.setLightening(lighteningCheckBox.isSelected());
 				// Evitamos que ambos estén activos
-				if (lightenCheckBox.isSelected()) {
+				if (lighteningCheckBox.isSelected()) {
 					selectedFigure.setDarkening(false);
-					darkenCheckBox.setSelected(false);
+					darkeningCheckBox.setSelected(false);
 				}
 				redrawCanvas();
 			}
 		});
 
-		darkenCheckBox.setOnAction(event -> {
+		darkeningCheckBox.setOnAction(event -> {
 			if (selectedFigure != null) {
-				selectedFigure.setDarkening(darkenCheckBox.isSelected());
+				selectedFigure.setDarkening(darkeningCheckBox.isSelected());
 				// Evitamos que ambos estén activos
-				if (darkenCheckBox.isSelected()) {
+				if (darkeningCheckBox.isSelected()) {
 					selectedFigure.setLightening(false);
-					lightenCheckBox.setSelected(false);
+					lighteningCheckBox.setSelected(false);
 				}
 				redrawCanvas();
 			}
 		});
-
 		setLeft(buttonsBox);
 		setRight(canvas);
 	}
@@ -218,50 +229,40 @@ public class PaintPane extends BorderPane {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		gc.setLineWidth(1);
 
-		for(Figure figure : canvasState.figures()) {
-			if(figure == selectedFigure) {
+		for (Figure figure : canvasState.figures()) {
+			if (figure == selectedFigure) {
 				gc.setStroke(Color.RED);
 			} else {
 				gc.setStroke(Color.BLACK);
 			}
 			gc.setFill(fillColorPicker.getValue());
 			figure.drawSelf(gc);
-
-			if(figure.hasLightening()){
-				gc.setFill(CLARIFICATION);
-			}
-			if(figure.hasDarkening()){
-				gc.setFill(DARKENING);
-			}
-
-			figure.drawSelf(gc);
-
 		}
 
 
 	}
 
 	/*
-	* Este metodo esta mal, debemos hacer que cada clase se sepa comparar, es decir hacerlo en el back y no en el front.
-	* */
+	 * Este metodo esta mal, debemos hacer que cada clase se sepa comparar, es decir hacerlo en el back y no en el front.
+	 * */
 	boolean figureBelongs(Figure figure, Point eventPoint) {
 		boolean found = false;
-		if(figure instanceof Rectangle rectangle) {
-            found = eventPoint.getX() > rectangle.getTopLeft().getX() && eventPoint.getX() < rectangle.getBottomRight().getX() &&
+		if (figure instanceof Rectangle rectangle) {
+			found = eventPoint.getX() > rectangle.getTopLeft().getX() && eventPoint.getX() < rectangle.getBottomRight().getX() &&
 					eventPoint.getY() > rectangle.getTopLeft().getY() && eventPoint.getY() < rectangle.getBottomRight().getY();
-		} else if(figure instanceof Circle circle) {
-            found = Math.sqrt(Math.pow(circle.getCenterPoint().getX() - eventPoint.getX(), 2) +
+		} else if (figure instanceof Circle circle) {
+			found = Math.sqrt(Math.pow(circle.getCenterPoint().getX() - eventPoint.getX(), 2) +
 					Math.pow(circle.getCenterPoint().getY() - eventPoint.getY(), 2)) < circle.getRadius();
-		} else if(figure instanceof Square square) {
-            found = eventPoint.getX() > square.getTopLeft().getX() && eventPoint.getX() < square.getBottomRight().getX() &&
+		} else if (figure instanceof Square square) {
+			found = eventPoint.getX() > square.getTopLeft().getX() && eventPoint.getX() < square.getBottomRight().getX() &&
 					eventPoint.getY() > square.getTopLeft().getY() && eventPoint.getY() < square.getBottomRight().getY();
-		} else if(figure instanceof Ellipse ellipse) {
-            // Nota: Fórmula aproximada. No es necesario corregirla.
+		} else if (figure instanceof Ellipse ellipse) {
+			// Nota: Fórmula aproximada. No es necesario corregirla.
 			found = ((Math.pow(eventPoint.getX() - ellipse.getCenterPoint().getX(), 2) / Math.pow(ellipse.getsMayorAxis(), 2)) +
 					(Math.pow(eventPoint.getY() - ellipse.getCenterPoint().getY(), 2) / Math.pow(ellipse.getsMinorAxis(), 2))) <= 0.30;
 		}
 		return found;
 	}
-
 }
+
 
