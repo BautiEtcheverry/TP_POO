@@ -20,7 +20,10 @@ public class Ellipse extends Figure {
     public String toString() {
         return String.format("Elipse [Centro: %s, DMayor: %.2f, DMenor: %.2f]", centerPoint, sMayorAxis, sMinorAxis);
     }
-
+    public void move(double diffX, double diffY){
+        getCenterPoint().changeX(diffX);
+        getCenterPoint().changeY(diffY);
+    }
     public Point getCenterPoint() {
         return centerPoint;
     }

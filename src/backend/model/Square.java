@@ -2,13 +2,10 @@ package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public class Square extends Figure {
-
-    private final Point topLeft, bottomRight;
+public class Square extends Rectangle {
 
     public Square(Point topLeft, double size) {
-        this.topLeft = topLeft;
-        this.bottomRight = new Point(topLeft.getX() + size, topLeft.getY() + size);
+       super(topLeft,new Point(topLeft.getX() + size, topLeft.getY() + size));
     }
     public void drawSelf(GraphicsContext gc){
         gc.fillRect(getTopLeft().getX(), getTopLeft().getY(),
@@ -17,16 +14,14 @@ public class Square extends Figure {
                 Math.abs(getTopLeft().getX() - getBottomRight().getX()), Math.abs(getTopLeft().getY() - getBottomRight().getY()));
     }
     public Point getTopLeft() {
-        return topLeft;
+        return super.getTopLeft();
     }
-
     public Point getBottomRight() {
-        return bottomRight;
+        return super.getBottomRight();
     }
-
     @Override
     public String toString() {
-        return String.format("Cuadrado [ %s , %s ]", topLeft, bottomRight);
+        return String.format("Cuadrado [ %s , %s ]", super.getTopLeft(), super.getBottomRight());
     }
 
 }
