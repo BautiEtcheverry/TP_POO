@@ -39,6 +39,10 @@ public class PaintPane extends BorderPane {
 	private final ToggleButton squareButton = new ToggleButton("Cuadrado");
 	private final ToggleButton ellipseButton = new ToggleButton("Elipse");
 	private final ToggleButton deleteButton = new ToggleButton("Borrar");
+	private final CheckBox lighteningCheckBox = new CheckBox("Aclaramiento");
+	private final CheckBox darkeningCheckBox = new CheckBox("Oscurecimiento");
+	private final CheckBox hMirroringCheckBox = new CheckBox("Espejo Horizontal");
+	private final CheckBox vMirroringCheckBox = new CheckBox("Espejo Vertical");
 
 	// Selector de color de relleno
 	private final ColorPicker fillColorPicker = new ColorPicker(Color.YELLOW);
@@ -71,10 +75,6 @@ public class PaintPane extends BorderPane {
 		buttonsBox.setPrefWidth(100);
 
 		HBox effectBar = new HBox(10);
-		CheckBox lighteningCheckBox = new CheckBox("Aclaramiento");
-		CheckBox darkeningCheckBox = new CheckBox("Oscurecimiento");
-		CheckBox hMirroringCheckBox = new CheckBox("Espejo Horizontal");
-		CheckBox vMirroringCheckBox = new CheckBox("Espejo Vertical");
 		effectBar.getChildren().addAll(new Label("Efectos:"), lighteningCheckBox, darkeningCheckBox, hMirroringCheckBox, vMirroringCheckBox);
 		effectBar.setPadding(new Insets(5));
 		effectBar.setStyle("-fx-background-color: #999;");
@@ -201,7 +201,6 @@ public class PaintPane extends BorderPane {
 		lighteningCheckBox.setOnAction(event -> {
 			if (selectedFigure != null) {
 				selectedFigure.setLightening(lighteningCheckBox.isSelected());
-				// Evitamos que ambos estén activos
 				if (lighteningCheckBox.isSelected()) {
 					selectedFigure.setDarkening(false);
 					darkeningCheckBox.setSelected(false);
@@ -213,7 +212,6 @@ public class PaintPane extends BorderPane {
 		darkeningCheckBox.setOnAction(event -> {
 			if (selectedFigure != null) {
 				selectedFigure.setDarkening(darkeningCheckBox.isSelected());
-				// Evitamos que ambos estén activos
 				if (darkeningCheckBox.isSelected()) {
 					selectedFigure.setLightening(false);
 					lighteningCheckBox.setSelected(false);
@@ -229,17 +227,24 @@ public class PaintPane extends BorderPane {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		gc.setLineWidth(1);
 
-		for (Figure figure : canvasState.figures()) {
-			if (figure == selectedFigure) {
+		for(Figure figure : canvasState.figures()) {
+			if(figure == selectedFigure) {
 				gc.setStroke(Color.RED);
 			} else {
 				gc.setStroke(Color.BLACK);
 			}
 			gc.setFill(fillColorPicker.getValue());
-			figure.drawSelf(gc);
+			figure.drawSelf(gc); // Dibujo base
+
+			if(figure.hasLightening()) {
+				gc.setFill(CLARIFICATION);
+				figure.drawSelf(gc); // efecto de aclaramiento
+			}
+			if(figure.hasDarkening()) {
+				gc.setFill(DARKENING);
+				figure.drawSelf(gc); // efecto de oscurecimiento
+			}
 		}
-
-
 	}
 
 	/*
