@@ -17,11 +17,15 @@ public class Rectangle extends Figure {
         gc.strokeRect(getTopLeft().getX(), getTopLeft().getY(),
                 Math.abs(getTopLeft().getX() - getBottomRight().getX()), Math.abs(getTopLeft().getY() - getBottomRight().getY()));
     }
-
+    public void move(double diffX, double diffY){
+        getTopLeft().changeX(diffX);
+        getBottomRight().changeX(diffX);
+        getTopLeft().changeY(diffY);
+        getBottomRight().changeY(diffY);
+    }
     public Point getTopLeft() {
         return topLeft;
     }
-
     public Point getBottomRight() {
         return bottomRight;
     }
