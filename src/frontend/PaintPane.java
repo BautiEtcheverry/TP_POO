@@ -6,18 +6,20 @@ import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.geometry.Insets;
+
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class PaintPane extends BorderPane {
-
 	// BackEnd
 	private final CanvasState canvasState;
 
@@ -46,6 +48,7 @@ public class PaintPane extends BorderPane {
 	// Seleccionar una figura
 	private Figure selectedFigure;
 
+
 	// StatusBar
 	private final StatusPane statusPane;
 
@@ -65,6 +68,17 @@ public class PaintPane extends BorderPane {
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
+
+		HBox effectBar = new HBox(10);
+		CheckBox lightening = new CheckBox("Aclaramiento");
+		CheckBox darkening = new CheckBox("Oscurecimiento");
+		CheckBox  hMirroring = new CheckBox("Espejo Horizontal");
+		CheckBox vMirroring = new CheckBox("Espejo Vertical");
+		effectBar.getChildren().addAll(new Label("Efectos:"), lightening, darkening, hMirroring, vMirroring);
+		effectBar.setPadding(new Insets(5));
+		effectBar.setStyle("-fx-background-color: #969696;");
+		setTop(effectBar);
+
 
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
