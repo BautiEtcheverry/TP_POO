@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -22,8 +23,8 @@ public class PaintPane extends BorderPane {
 	private final CanvasState canvasState;
 
 	//Constantes para el funcionamiento del aclaramiento y el oscuresimiento
-	private static final RGBColor CLARIFICATION = new RGBColor(255,255,255,0.7);
-	private static final RGBColor DARKENING = new RGBColor(0,0,0,0.7);;
+	private static final Color CLARIFICATION =  Color.rgb(255,255,255,0.7);
+	private static final Color DARKENING =  Color.rgb(0,0,0,0.7);;
 
 	// Canvas y relacionados
 	private final Canvas canvas = new Canvas(800, 600);
@@ -136,6 +137,17 @@ public class PaintPane extends BorderPane {
 					selectedFigure = null;
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
+
+				if (found) {
+					lightenCheckBox.setSelected(selectedFigure.hasLightening());
+					darkenCheckBox.setSelected(selectedFigure.hasDarkening());
+					statusPane.updateStatus(label.toString());
+				} else {
+					selectedFigure = null;
+					lightenCheckBox.setSelected(false);
+					darkenCheckBox.setSelected(false);
+					statusPane.updateStatus("Ninguna figura encontrada");
+				}
 				redrawCanvas();
 			}
 		});
@@ -174,6 +186,30 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
+		lightenCheckBox.setOnAction(event -> {
+			if (selectedFigure != null) {
+				selectedFigure.setLightening(lightenCheckBox.isSelected());
+				// Evitamos que ambos estén activos
+				if (lightenCheckBox.isSelected()) {
+					selectedFigure.setDarkening(false);
+					darkenCheckBox.setSelected(false);
+				}
+				redrawCanvas();
+			}
+		});
+
+		darkenCheckBox.setOnAction(event -> {
+			if (selectedFigure != null) {
+				selectedFigure.setDarkening(darkenCheckBox.isSelected());
+				// Evitamos que ambos estén activos
+				if (darkenCheckBox.isSelected()) {
+					selectedFigure.setLightening(false);
+					lightenCheckBox.setSelected(false);
+				}
+				redrawCanvas();
+			}
+		});
+
 		setLeft(buttonsBox);
 		setRight(canvas);
 	}
@@ -190,6 +226,16 @@ public class PaintPane extends BorderPane {
 			}
 			gc.setFill(fillColorPicker.getValue());
 			figure.drawSelf(gc);
+
+			if(figure.hasLightening()){
+				gc.setFill(CLARIFICATION);
+			}
+			if(figure.hasDarkening()){
+				gc.setFill(DARKENING);
+			}
+
+			figure.drawSelf(gc);
+
 		}
 
 
