@@ -2,7 +2,7 @@ package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public class Square implements Figure {
+public class Square extends Figure {
 
     private final Point topLeft, bottomRight;
 

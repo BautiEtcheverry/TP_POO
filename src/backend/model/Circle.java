@@ -2,7 +2,7 @@ package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public class Circle extends Ellipse implements Figure {
+public class Circle extends Ellipse {
 
 
     public Circle(Point centerPoint, double radius) {
