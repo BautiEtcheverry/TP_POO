@@ -193,10 +193,7 @@ public class PaintPane extends BorderPane {
 		lighteningCheckBox.setOnAction(event -> {
 			if (selectedFigure != null) {
 				selectedFigure.setLightening(lighteningCheckBox.isSelected());
-				if (lighteningCheckBox.isSelected()) {
-					selectedFigure.setDarkening(false);
-					darkeningCheckBox.setSelected(false);
-				}
+
 				redrawCanvas();
 			}
 		});
@@ -204,10 +201,7 @@ public class PaintPane extends BorderPane {
 		darkeningCheckBox.setOnAction(event -> {
 			if (selectedFigure != null) {
 				selectedFigure.setDarkening(darkeningCheckBox.isSelected());
-				if (darkeningCheckBox.isSelected()) {
-					selectedFigure.setLightening(false);
-					lighteningCheckBox.setSelected(false);
-				}
+
 				redrawCanvas();
 			}
 		});
