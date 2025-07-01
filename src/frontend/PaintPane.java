@@ -21,6 +21,10 @@ public class PaintPane extends BorderPane {
 	// BackEnd
 	private final CanvasState canvasState;
 
+	//Constantes para el funcionamiento del aclaramiento y el oscuresimiento
+	private static final RGBColor CLARIFICATION = new RGBColor(255,255,255,0.7);
+	private static final RGBColor DARKENING = new RGBColor(0,0,0,0.7);;
+
 	// Canvas y relacionados
 	private final Canvas canvas = new Canvas(800, 600);
 	private final GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -177,6 +181,7 @@ public class PaintPane extends BorderPane {
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		gc.setLineWidth(1);
+
 		for(Figure figure : canvasState.figures()) {
 			if(figure == selectedFigure) {
 				gc.setStroke(Color.RED);
@@ -186,6 +191,8 @@ public class PaintPane extends BorderPane {
 			gc.setFill(fillColorPicker.getValue());
 			figure.drawSelf(gc);
 		}
+
+
 	}
 
 	/*
