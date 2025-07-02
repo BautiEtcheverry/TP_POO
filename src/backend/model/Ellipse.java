@@ -17,12 +17,12 @@ public class Ellipse extends Figure {
         getDrawer().drawEllipse(centerPoint, sMayorAxis,sMinorAxis);
     }
 
-    public void drawVerticalMirror(GraphicsContext gc){
-        double canvasHeight = gc.getCanvas().getHeight();
-        double mirroredY = canvasHeight - centerPoint.getY();
-        Point mirroredCenter = new Point(centerPoint.getX(), mirroredY);
-        Ellipse mirrored = new Ellipse(mirroredCenter, sMayorAxis, sMinorAxis);
-        mirrored.drawSelf();
+    public void drawVerticalMirror(){
+        getDrawer().drawVerticalMirrorEllipse(centerPoint,sMayorAxis,sMinorAxis);
+    }
+
+    public void drawHorizontalMirror(){
+        getDrawer().drawHorizontalMirrorEllipse(centerPoint,sMayorAxis,sMinorAxis);
     }
 
     @Override

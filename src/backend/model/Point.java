@@ -26,6 +26,8 @@ public class Point {
         this.y += y;
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         return o instanceof Point point &&

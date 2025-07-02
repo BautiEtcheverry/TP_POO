@@ -1,6 +1,7 @@
 package frontend;
 
 import backend.CanvasState;
+import backend.model.Point;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -21,5 +22,5 @@ public class AppLauncher extends Application {
 		primaryStage.show();
 		primaryStage.setOnCloseRequest(event -> System.exit(0));
 	}
-}
 
+}

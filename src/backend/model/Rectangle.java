@@ -11,18 +11,30 @@ public class Rectangle extends Figure {
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
     }
+
     public void drawSelf(){
         getDrawer().drawRectangle(topLeft,bottomRight);
     }
+
+    public void drawVerticalMirror(){
+        getDrawer().drawVerticalMirrorRectangle(topLeft,bottomRight);
+    }
+
+    public void drawHorizontalMirror(){
+        getDrawer().drawHorizontalMirrorRectangle(topLeft,bottomRight);
+    }
+
     public void move(double diffX, double diffY){
         getTopLeft().changeX(diffX);
         getBottomRight().changeX(diffX);
         getTopLeft().changeY(diffY);
         getBottomRight().changeY(diffY);
     }
+
     public Point getTopLeft() {
         return topLeft;
     }
+
     public Point getBottomRight() {
         return bottomRight;
     }

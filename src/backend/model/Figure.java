@@ -54,5 +54,9 @@ public abstract class Figure {
     public void setvMirroring(boolean state){
         vMirroring = state;
     }
+
+    public abstract void drawVerticalMirror();
+    public abstract void drawHorizontalMirror();
+
     public abstract void move(double diffX, double diffY);
 }

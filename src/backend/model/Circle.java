@@ -4,7 +4,6 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Circle extends Ellipse {
 
-
     public Circle(Point centerPoint, double radius) {
         super(centerPoint, 2 * radius, 2 * radius);
     }
