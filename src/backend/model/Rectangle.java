@@ -13,7 +13,7 @@ public class Rectangle extends Figure {
     }
 
     public void drawSelf(){
-        getDrawer().drawRectangle(topLeft,bottomRight);
+        getDrawer().drawRectangle(topLeft,bottomRight,this.hasDarkening(),this.hasLightening(),hasVMirroring(),hasHMirroring());
     }
 
     public void drawVerticalMirror(){

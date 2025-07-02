@@ -10,7 +10,7 @@ public class Circle extends Ellipse {
 
     public void drawSelf(){
         double diameter = getRadius() * 2;
-        getDrawer().drawEllipse(centerPoint, diameter,diameter);
+        getDrawer().drawEllipse(centerPoint,diameter,diameter,hasDarkening(),hasLightening(),hasVMirroring(),hasHMirroring());
 
     }
 

@@ -44,7 +44,6 @@ public abstract class Figure {
     public void setLightening(boolean state) {
         lightening = state;
     }
-
     public void setDarkening(boolean state){
         darkening = state;
     }

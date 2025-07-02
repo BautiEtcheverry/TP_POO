@@ -8,9 +8,7 @@ public class Square extends Rectangle {
        super(topLeft,new Point(topLeft.getX() + size, topLeft.getY() + size));
     }
 
-    public void drawSelf(){
-        getDrawer().drawRectangle(getTopLeft(),getBottomRight());
-    }
+    public void drawSelf(){getDrawer().drawRectangle(getTopLeft(),getBottomRight(),hasDarkening(),hasLightening(),hasVMirroring(),hasHMirroring());}
 
     public Point getTopLeft() {
         return super.getTopLeft();

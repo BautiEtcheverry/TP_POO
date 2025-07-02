@@ -251,24 +251,7 @@ public class PaintPane extends BorderPane {
 			} else {
 				gc.setStroke(Color.BLACK);
 			}
-
-			gc.setFill(fillColorPicker.getValue());
 			figure.drawSelf();
-
-			if(figure.hasVMirroring()){
-				figure.drawVerticalMirror();
-			}
-			if(figure.hasHMirroring()){
-				figure.drawHorizontalMirror();
-			}
-			if(figure.hasLightening()) {
-				gc.setFill(CLARIFICATION);
-				figure.drawSelf();
-			}
-			if(figure.hasDarkening()) {
-				gc.setFill(DARKENING);
-				figure.drawSelf();
-			}
 		}
 	}
 

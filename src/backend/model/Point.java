@@ -26,8 +26,6 @@ public class Point {
         this.y += y;
     }
 
-
-
     @Override
     public boolean equals(Object o) {
         return o instanceof Point point &&
@@ -39,8 +37,6 @@ public class Point {
     public int hashCode() {
         return Objects.hash(x, y);
     }
-
-
 
     @Override
     public String toString() {
