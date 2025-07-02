@@ -59,4 +59,5 @@ public abstract class Figure {
     public abstract void drawHorizontalMirror();
 
     public abstract void move(double diffX, double diffY);
+    public abstract boolean Belongs(Point punto);
 }

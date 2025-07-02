@@ -22,4 +22,12 @@ public class Circle extends Ellipse {
         return this.getsMayorAxis() / 2;
     }
 
+
+    @Override
+    public boolean Belongs(Point eventPoint) {
+        return Math.sqrt(Math.pow(this.getCenterPoint().getX() - eventPoint.getX(), 2) +
+                Math.pow(this.getCenterPoint().getY() - eventPoint.getY(), 2)) < this.getRadius();
+    }
+
+
 }

@@ -15,6 +15,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.BiFunction;
+
+
+
 public class PaintPane extends BorderPane {
 	// BackEnd
 	private final CanvasState canvasState;
@@ -38,6 +44,8 @@ public class PaintPane extends BorderPane {
 	private final CheckBox darkeningCheckBox = new CheckBox("Oscurecimiento");
 	private final CheckBox hMirroringCheckBox = new CheckBox("Espejo Horizontal");
 	private final CheckBox vMirroringCheckBox = new CheckBox("Espejo Vertical");
+
+
 
 	// Selector de color de relleno
 	private final ColorPicker fillColorPicker = new ColorPicker(Color.YELLOW);
@@ -130,7 +138,7 @@ public class PaintPane extends BorderPane {
 			boolean found = false;
 			StringBuilder label = new StringBuilder();
 			for (Figure figure : canvasState.figures()) {
-				if (figureBelongs(figure, eventPoint)) {
+				if (figure.Belongs(eventPoint)) {
 					found = true;
 					label.append(figure.toString());
 				}
@@ -148,7 +156,7 @@ public class PaintPane extends BorderPane {
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				for (Figure figure : canvasState.figures()) {
-					if (figureBelongs(figure, eventPoint)) {
+					if (figure.Belongs(eventPoint)) {
 						found = true;
 						selectedFigure = figure;
 						label.append(figure.toString());
@@ -184,8 +192,8 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMouseDragged(event -> {
 			if (selectionButton.isSelected() && selectedFigure != null) {
 				Point eventPoint = new Point(event.getX(), event.getY());
-				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
-				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
+				double diffX = (eventPoint.getX() - startPoint.getX()) / 70;
+				double diffY = (eventPoint.getY() - startPoint.getY()) / 70;
 				selectedFigure.move(diffX,diffY);
 				redrawCanvas();
 			}
@@ -243,8 +251,10 @@ public class PaintPane extends BorderPane {
 			} else {
 				gc.setStroke(Color.BLACK);
 			}
+
 			gc.setFill(fillColorPicker.getValue());
 			figure.drawSelf();
+
 			if(figure.hasVMirroring()){
 				figure.drawVerticalMirror();
 			}
@@ -262,27 +272,6 @@ public class PaintPane extends BorderPane {
 		}
 	}
 
-	/*
-	 * Este metodo esta mal, debemos hacer que cada clase se sepa comparar, es decir hacerlo en el back y no en el front.
-	 * */
-	boolean figureBelongs(Figure figure, Point eventPoint) {
-		boolean found = false;
-		if (figure instanceof Rectangle rectangle) {
-			found = eventPoint.getX() > rectangle.getTopLeft().getX() && eventPoint.getX() < rectangle.getBottomRight().getX() &&
-					eventPoint.getY() > rectangle.getTopLeft().getY() && eventPoint.getY() < rectangle.getBottomRight().getY();
-		} else if (figure instanceof Circle circle) {
-			found = Math.sqrt(Math.pow(circle.getCenterPoint().getX() - eventPoint.getX(), 2) +
-					Math.pow(circle.getCenterPoint().getY() - eventPoint.getY(), 2)) < circle.getRadius();
-		} else if (figure instanceof Square square) {
-			found = eventPoint.getX() > square.getTopLeft().getX() && eventPoint.getX() < square.getBottomRight().getX() &&
-					eventPoint.getY() > square.getTopLeft().getY() && eventPoint.getY() < square.getBottomRight().getY();
-		} else if (figure instanceof Ellipse ellipse) {
-			// Nota: Fórmula aproximada. No es necesario corregirla.
-			found = ((Math.pow(eventPoint.getX() - ellipse.getCenterPoint().getX(), 2) / Math.pow(ellipse.getsMayorAxis(), 2)) +
-					(Math.pow(eventPoint.getY() - ellipse.getCenterPoint().getY(), 2) / Math.pow(ellipse.getsMinorAxis(), 2))) <= 0.30;
-		}
-		return found;
-	}
 }
 
 

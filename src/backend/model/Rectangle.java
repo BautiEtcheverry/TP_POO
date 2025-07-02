@@ -31,6 +31,12 @@ public class Rectangle extends Figure {
         getBottomRight().changeY(diffY);
     }
 
+    @Override
+    public boolean Belongs(Point eventPoint) {
+        return eventPoint.getX() > this.getTopLeft().getX() && eventPoint.getX() < this.getBottomRight().getX() &&
+                eventPoint.getY() > this.getTopLeft().getY() && eventPoint.getY() < this.getBottomRight().getY();
+    }
+
     public Point getTopLeft() {
         return topLeft;
     }
@@ -43,5 +49,6 @@ public class Rectangle extends Figure {
     public String toString() {
         return String.format("Rectángulo [ %s , %s ]", topLeft, bottomRight);
     }
+
 
 }
