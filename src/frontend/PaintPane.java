@@ -96,6 +96,12 @@ public class PaintPane extends BorderPane {
 		moveButton.setOnAction(event -> MoveFigure.show(selectedFigure, this::redrawCanvas));
 		buttonsBox.getChildren().add(moveButton);
 
+		ComboBox<BorderType> borderSelector = new ComboBox<>();
+		borderSelector.getItems().addAll(BorderType.values());
+		borderSelector.setValue(BorderType.NORMAL); // valor inicial
+		buttonsBox.getChildren().add(borderSelector);
+
+
 		buttonsBox.getChildren().add(fillColorPicker);
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setStyle("-fx-background-color: #999");
@@ -106,6 +112,14 @@ public class PaintPane extends BorderPane {
 		effectBar.setPadding(new Insets(5));
 		effectBar.setStyle("-fx-background-color: #999;");
 		setTop(effectBar);
+
+		// Cuando cambia el valor del combo, se lo asigna a la figura seleccionada
+		borderSelector.setOnAction(e -> {
+			if (selectedFigure != null) {
+				selectedFigure.setBorderType(borderSelector.getValue());
+				redrawCanvas();
+			}
+		});
 
 
 		canvas.setOnMousePressed(event -> {
@@ -150,6 +164,7 @@ public class PaintPane extends BorderPane {
 			newFigure.setDarkening(darkeningCheckBox.isSelected());
 			newFigure.sethMirroring(hMirroringCheckBox.isSelected());
 			newFigure.setvMirroring(vMirroringCheckBox.isSelected());
+			newFigure.setBorderType(borderSelector.getValue());
 			canvasState.addFigure(newFigure);
 
 			startPoint = null;
@@ -268,14 +283,11 @@ public class PaintPane extends BorderPane {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		gc.setLineWidth(1);
 
-		for(Figure figure : canvasState.figures()) {
-			if(figure == selectedFigure) {
-				gc.setStroke(Color.RED);
-			} else {
-				gc.setStroke(Color.BLACK);
-			}
-			figure.drawSelf();
+		for (Figure figure : canvasState.figures()) {
+			figure.setSelected(figure == selectedFigure); // 🔴 Setea si está seleccionada
+			figure.drawSelf();                            // el `Drawer` usa eso para aplicar el borde
 		}
+
 	}
 
 }

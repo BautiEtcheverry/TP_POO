@@ -14,6 +14,8 @@ public abstract class Figure {
     private boolean darkening;
     private boolean hMirroring;
     private boolean vMirroring;
+    private boolean selected;
+    private BorderType borde;
 
     //Instancia de una interfaz que debe de ser implementada por el front para dibujar las figuras.
     private Drawers drawer;
@@ -42,6 +44,19 @@ public abstract class Figure {
     public boolean hasVMirroring(){
         return  vMirroring;
     }
+    public boolean isSelected(){
+        return selected;
+    }
+    public BorderType getBorderType(){
+        return borde;
+    }
+
+
+
+
+    public void setBorderType(BorderType borderType) {
+        this.borde = borderType;
+    }
 
     public void setLightening(boolean state) {
         lightening = state;
@@ -55,6 +70,9 @@ public abstract class Figure {
     public void setvMirroring(boolean state){
         vMirroring = state;
     }
+    public void setSelected(boolean state){
+        selected = state;
+    }
 
     public abstract void drawVerticalMirror();
     public abstract void drawHorizontalMirror();
@@ -63,6 +81,9 @@ public abstract class Figure {
     public abstract void moveTo(double newX, double newY); //Para mover una figura a una posicion especifica.
     public abstract boolean Belongs(Point punto);
 
+
+
+
     public abstract Figure clone(double offsetX, double offsetY);
     protected void setProperties(Figure otherFigure){
         otherFigure.setDrawer(this.getDrawer());
@@ -70,5 +91,11 @@ public abstract class Figure {
         otherFigure.setDarkening(this.hasDarkening());
         otherFigure.sethMirroring(this.hasHMirroring());
         otherFigure.setvMirroring(this.hasVMirroring());
+        otherFigure.setBorderType(this.getBorderType()); // NUEVO
+
     }
+
+
+
+
 }

@@ -14,7 +14,7 @@ public class Ellipse extends Figure {
     }
 
     public void drawSelf(){
-        getDrawer().drawEllipse(centerPoint, sMayorAxis,sMinorAxis,this.hasDarkening(),this.hasLightening(),hasVMirroring(),hasHMirroring());
+        getDrawer().drawEllipse(centerPoint, sMayorAxis,sMinorAxis,this.hasDarkening(),this.hasLightening(),hasVMirroring(),hasHMirroring(), isSelected(), getBorderType());
     }
 
     public void drawVerticalMirror(){

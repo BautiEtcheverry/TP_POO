@@ -1,5 +1,6 @@
 package frontend;
 import backend.Drawers;
+import backend.model.BorderType;
 import backend.model.Ellipse;
 import backend.model.Point;
 import javafx.scene.canvas.GraphicsContext;
@@ -30,7 +31,8 @@ public class JFXDrawer implements Drawers{
     }
 
     @Override
-    public void drawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis,boolean darkening,boolean lightening,boolean vMirror, boolean hMirror){
+    public void drawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis,boolean darkening,boolean lightening,boolean vMirror, boolean hMirror,boolean selected ,BorderType borde){
+        applyStrokeStyle(borde, selected);
         gc.setFill(fillColorPicker.getValue());
         paintE(centerPoint,sMayorAxis,sMinorAxis);
 
@@ -52,7 +54,8 @@ public class JFXDrawer implements Drawers{
 
 
     @Override
-    public void drawRectangle(Point topLeft,Point bottomRight,boolean darkening,boolean lightening,boolean vMirror, boolean hMirror){
+    public void drawRectangle(Point topLeft,Point bottomRight,boolean darkening,boolean lightening,boolean vMirror, boolean hMirror,boolean selected ,BorderType borde){
+        applyStrokeStyle(borde, selected);
         gc.setFill(fillColorPicker.getValue());
         paintR(topLeft,bottomRight);
 
@@ -104,5 +107,38 @@ public class JFXDrawer implements Drawers{
         gc.setFill(fillColorPicker.getValue());
         paintE(mirroredCenter, sMayorAxis, sMinorAxis);
     }
+
+    private void applyStrokeStyle(BorderType type, boolean selected) {
+        if (type == null) {
+            type = BorderType.NORMAL;
+        }
+        gc.setStroke(selected ? Color.RED : Color.BLACK);
+
+
+        switch (type) {
+            case NORMAL -> {
+                gc.setLineWidth(1);
+                gc.setLineCap(null);
+                gc.setLineDashes();
+            }
+            case PIXELADO -> {
+                gc.setLineWidth(5);
+                gc.setLineCap(javafx.scene.shape.StrokeLineCap.BUTT);
+                gc.setLineDashes(1, 1);
+            }
+            case PUNTEADO_FINO -> {
+                gc.setLineWidth(1);
+                gc.setLineCap(javafx.scene.shape.StrokeLineCap.ROUND);
+                gc.setLineDashes(2, 6);
+            }
+            case PUNTEADO_COMPLEJO -> {
+                gc.setLineWidth(3);
+                gc.setLineCap(javafx.scene.shape.StrokeLineCap.SQUARE);
+                gc.setLineDashes(25, 10, 15, 10);
+            }
+        }
+    }
+
+
 
 }
