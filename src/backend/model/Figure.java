@@ -25,7 +25,9 @@ public abstract class Figure {
     }
 
 
-    //Metodo para que cada figura se dibuje en el canvas 2d.
+    /*
+        Metodo para que cada figura se dibuje en el canvas 2d.
+    */
     public abstract void drawSelf();
 
     public boolean hasLightening(){
