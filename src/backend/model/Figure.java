@@ -66,8 +66,8 @@ public abstract class Figure {
         selected = state;
     }
 
-    public abstract void drawVerticalMirror();
-    public abstract void drawHorizontalMirror();
+    public abstract void drawVerticalMirror(Figure figure);
+    public abstract void drawHorizontalMirror(Figure figure);
 
     public abstract void move(double diffX, double diffY);
     public abstract void moveTo(double newX, double newY); //Para mover una figura a una posicion especifica.

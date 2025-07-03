@@ -12,14 +12,14 @@ public class Ellipse extends Figure {
     }
 
     public void drawSelf(){
-        getDrawer().drawEllipse(centerPoint, sMayorAxis,sMinorAxis,this.hasDarkening(),this.hasLightening(),hasVMirroring(),hasHMirroring(), isSelected(), getBorderType());
+        getDrawer().drawEllipse(this);
     }
 
-    public void drawVerticalMirror(){
+    public void drawVerticalMirror(Figure figure){
         getDrawer().drawVerticalMirrorEllipse(centerPoint,sMayorAxis,sMinorAxis);
     }
 
-    public void drawHorizontalMirror(){
+    public void drawHorizontalMirror(Figure figure){
         getDrawer().drawHorizontalMirrorEllipse(centerPoint,sMayorAxis,sMinorAxis);
     }
 

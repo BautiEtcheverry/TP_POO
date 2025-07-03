@@ -11,14 +11,14 @@ public class Rectangle extends Figure {
     }
 
     public void drawSelf(){
-        getDrawer().drawRectangle(topLeft,bottomRight,this.hasDarkening(),this.hasLightening(),hasVMirroring(),hasHMirroring(), isSelected(), getBorderType());
+        getDrawer().drawRectangle(this);
     }
 
-    public void drawVerticalMirror(){
+    public void drawVerticalMirror(Figure figure){
         getDrawer().drawVerticalMirrorRectangle(topLeft,bottomRight);
     }
 
-    public void drawHorizontalMirror(){
+    public void drawHorizontalMirror(Figure figure){
         getDrawer().drawHorizontalMirrorRectangle(topLeft,bottomRight);
     }
 
