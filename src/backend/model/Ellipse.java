@@ -1,8 +1,5 @@
 package backend.model;
 
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ColorPicker;
-
 public class Ellipse extends Figure {
 
     protected final Point centerPoint;
@@ -52,7 +49,7 @@ public class Ellipse extends Figure {
         return newFigure;
     }
 
-    public Figure divideVertical(int N,int times){
+    public Figure divideHorizontal(int N,int times){
         //cada vez que lo llame
         Ellipse newFigure = new Ellipse(centerPoint, sMayorAxis/N, sMinorAxis);
         setProperties(newFigure);

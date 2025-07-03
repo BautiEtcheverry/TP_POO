@@ -1,13 +1,6 @@
 package backend.model;
 
 import backend.Drawers;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import jdk.swing.interop.DragSourceContextWrapper;
-
-import javax.swing.text.ElementIterator;
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class Figure {
     private boolean lightening;
@@ -25,7 +18,6 @@ public abstract class Figure {
     public void setDrawer(Drawers drawer){
         this.drawer=drawer;
     }
-
 
     /*
         Metodo para que cada figura se dibuje en el canvas 2d.
@@ -94,6 +86,7 @@ public abstract class Figure {
         otherFigure.setBorderType(this.getBorderType()); // NUEVO
 
     }
+    public abstract Figure divideHorizontal(int N, int times);
 
 
 

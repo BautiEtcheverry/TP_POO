@@ -1,7 +1,6 @@
 package frontend;
 import backend.Drawers;
 import backend.model.BorderType;
-import backend.model.Ellipse;
 import backend.model.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
