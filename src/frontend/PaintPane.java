@@ -74,6 +74,23 @@ public class PaintPane extends BorderPane {
 		}
 		VBox buttonsBox = new VBox(10);
 		buttonsBox.getChildren().addAll(toolsArr);
+
+		Button multiplyButton = new Button("Multiply.");
+		multiplyButton.setMinWidth(90);
+		multiplyButton.setOnAction(e -> {
+			if (selectedFigure == null) {
+				statusPane.updateStatus("No hay figura seleccionada");
+				return;
+			}
+			MultiplyFigure.show(selectedFigure, clones -> {
+				for (Figure f : clones) {
+					canvasState.addFigure(f);
+				}
+				redrawCanvas();
+			});
+		});
+		buttonsBox.getChildren().add(multiplyButton);
+
 		Button moveButton = new Button("Trasladar");
 		moveButton.setMinWidth(90);
 		moveButton.setOnAction(e -> MoveFigure.show(selectedFigure, this::redrawCanvas));
