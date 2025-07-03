@@ -32,7 +32,7 @@ public class JFXDrawer implements Drawers{
     @Override
     public void drawEllipse(Ellipse ellipse){
         applyStrokeStyle(ellipse.getBorderType(), ellipse.isSelected());
-        gc.setFill(fillColorPicker.getValue());
+        gc.setFill(toColor(ellipse.getfillColor()));
         paintE(ellipse.getCenterPoint(),ellipse.getsMayorAxis(),ellipse.getsMinorAxis());
 
         if(ellipse.hasLightening()) {
@@ -51,7 +51,7 @@ public class JFXDrawer implements Drawers{
     @Override
     public void drawRectangle(Rectangle rectangle){
         applyStrokeStyle(rectangle.getBorderType(), rectangle.isSelected());
-        gc.setFill(fillColorPicker.getValue());
+        gc.setFill(toColor(rectangle.getfillColor()));
         paintR(rectangle.getTopLeft(),rectangle.getBottomRight());
 
         if(rectangle.hasLightening()) {
@@ -67,6 +67,7 @@ public class JFXDrawer implements Drawers{
     }
 
     private void mirrorDrawer(Figure figure){
+        gc.setFill(toColor(figure.getfillColor()));
         if(figure.hasVMirroring()){
             figure.drawVerticalMirror(figure);
         }
@@ -78,7 +79,6 @@ public class JFXDrawer implements Drawers{
     public void drawVerticalMirrorEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis) {
         double mirroredX = centerPoint.getX() + sMayorAxis;
         Point mirroredCenter = new Point(mirroredX, centerPoint.getY());
-        gc.setFill(fillColorPicker.getValue());
         paintE(mirroredCenter, sMayorAxis, sMinorAxis);
     }
 
@@ -87,7 +87,6 @@ public class JFXDrawer implements Drawers{
         double newTopLeftX = bottomRight.getX();
         Point newTopLeft = new Point(newTopLeftX, topLeft.getY());
         Point newBottomRight = new Point(newTopLeftX + width, bottomRight.getY());
-        gc.setFill(fillColorPicker.getValue());
         paintR(newTopLeft,newBottomRight);
     }
 
@@ -96,14 +95,12 @@ public class JFXDrawer implements Drawers{
         double newTopLeftY = topLeft.getY() + height;
         Point newBottomRight = new Point(bottomRight.getX(),topLeft.getY());
         Point newTopLeft = new Point(topLeft.getX(),newTopLeftY);
-        gc.setFill(fillColorPicker.getValue());
         paintR(newTopLeft,newBottomRight);
     }
 
     public void drawHorizontalMirrorEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis){
         double mirroredY = centerPoint.getY() + sMinorAxis;
         Point mirroredCenter = new Point(centerPoint.getX(), mirroredY);
-        gc.setFill(fillColorPicker.getValue());
         paintE(mirroredCenter, sMayorAxis, sMinorAxis);
     }
 
