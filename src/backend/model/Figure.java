@@ -60,8 +60,8 @@ public abstract class Figure {
     public abstract void move(double diffX, double diffY);
     public abstract void moveTo(double newX, double newY); //Para mover una figura a una posicion especifica.
     public abstract boolean Belongs(Point punto);
-    public abstract Figure clone(double offsetX, double offsetY);
 
+    public abstract Figure clone(double offsetX, double offsetY);
     protected void setProperties(Figure otherFigure){
         otherFigure.setDrawer(this.getDrawer());
         otherFigure.setLightening(this.hasLightening());
