@@ -233,7 +233,6 @@ public class PaintPane extends BorderPane {
 		lighteningCheckBox.setOnAction(event -> {
 			if (selectedFigure != null) {
 				selectedFigure.setLightening(lighteningCheckBox.isSelected());
-
 				redrawCanvas();
 			}
 		});
@@ -241,7 +240,6 @@ public class PaintPane extends BorderPane {
 		darkeningCheckBox.setOnAction(event -> {
 			if (selectedFigure != null) {
 				selectedFigure.setDarkening(darkeningCheckBox.isSelected());
-
 				redrawCanvas();
 			}
 		});
