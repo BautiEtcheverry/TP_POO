@@ -8,13 +8,14 @@ import javafx.scene.paint.Color;
 
 public class JFXDrawer implements Drawers{
     private GraphicsContext gc;
-    private final ColorPicker fillColorPicker = new ColorPicker(Color.YELLOW);
+    private final ColorPicker fillColorPicker;
     private static final Color CLARIFICATION = Color.rgb(255, 255, 255, 0.7);
     private static final Color DARKENING = Color.rgb(0, 0, 0, 0.7);
 
 
-    public JFXDrawer(GraphicsContext gc){
+    public JFXDrawer(GraphicsContext gc, ColorPicker fillColorPicker){
         this.gc=gc;
+        this.fillColorPicker=fillColorPicker;
     }
 
     private void paintE(Point centerPoint, double sMayorAxis, double sMinorAxis){

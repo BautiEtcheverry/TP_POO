@@ -48,7 +48,7 @@ public class PaintPane extends BorderPane {
 	private Figure selectedFigure;
 
 	//Clase para dibujar figuras
-	private final Drawers drawer = new JFXDrawer(gc);
+	private final Drawers drawer = new JFXDrawer(gc, fillColorPicker);
 
 	// StatusBar
 	private final StatusPane statusPane;
