@@ -44,6 +44,12 @@ public class Ellipse extends Figure {
         return ((Math.pow(eventPoint.getX() - this.getCenterPoint().getX(), 2) / Math.pow(this.getsMayorAxis(), 2)) +
                 (Math.pow(eventPoint.getY() - this.getCenterPoint().getY(), 2) / Math.pow(this.getsMinorAxis(), 2))) <= 0.30;
     }
+    @Override
+    public Figure clone(double offsetX, double offsetY){
+        Ellipse newFigure = new Ellipse(new Point(centerPoint.getX()+offsetX, centerPoint.getY()+offsetY), sMayorAxis,sMinorAxis);
+        setProperties(newFigure);
+        return newFigure;
+    }
 
     public Point getCenterPoint() {
         return centerPoint;

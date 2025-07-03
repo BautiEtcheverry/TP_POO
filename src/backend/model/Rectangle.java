@@ -3,6 +3,8 @@ package backend.model;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.GregorianCalendar;
+
 public class Rectangle extends Figure {
 
     private final Point topLeft, bottomRight;
@@ -40,6 +42,14 @@ public class Rectangle extends Figure {
     public boolean Belongs(Point eventPoint) {
         return eventPoint.getX() > this.getTopLeft().getX() && eventPoint.getX() < this.getBottomRight().getX() &&
                 eventPoint.getY() > this.getTopLeft().getY() && eventPoint.getY() < this.getBottomRight().getY();
+    }
+    @Override
+    public Figure clone(double offsetX, double offsetY){
+        Rectangle newFigure = new Rectangle(
+                new Point(topLeft.getX()+offsetX, topLeft.getY()+offsetY),
+                new Point(bottomRight.getX()+offsetX, bottomRight.getY()+offsetY));
+        setProperties(newFigure);
+        return newFigure;
     }
 
     public Point getTopLeft() {
