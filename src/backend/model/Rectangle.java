@@ -30,6 +30,11 @@ public class Rectangle extends Figure {
         getTopLeft().changeY(diffY);
         getBottomRight().changeY(diffY);
     }
+    public void moveTo(double newX, double newY){
+        double diffX = newX - topLeft.getX();
+        double diffY = newY - topLeft.getY();
+        move(diffX, diffY);
+    }
 
     @Override
     public boolean Belongs(Point eventPoint) {

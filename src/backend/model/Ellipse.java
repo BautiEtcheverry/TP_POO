@@ -33,6 +33,11 @@ public class Ellipse extends Figure {
         getCenterPoint().changeX(diffX);
         getCenterPoint().changeY(diffY);
     }
+    public void moveTo(double newX, double newY){
+        double diffX = newX - centerPoint.getX();
+        double diffY = newY - centerPoint.getY();
+        move(diffX, diffY);
+    }
 
     @Override
     public boolean Belongs(Point eventPoint) {

@@ -74,6 +74,11 @@ public class PaintPane extends BorderPane {
 		}
 		VBox buttonsBox = new VBox(10);
 		buttonsBox.getChildren().addAll(toolsArr);
+		Button moveButton = new Button("Trasladar");
+		moveButton.setMinWidth(90);
+		moveButton.setOnAction(e -> MoveFigure.show(selectedFigure, this::redrawCanvas));
+		buttonsBox.getChildren().add(moveButton);
+
 		buttonsBox.getChildren().add(fillColorPicker);
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setStyle("-fx-background-color: #999");
@@ -101,7 +106,7 @@ public class PaintPane extends BorderPane {
 			Figure newFigure = null;
 
 			//ESTO HAY QUE CAMBIARLO ES MUY IMPERATIVO.
-
+			// --------------------------------------------------------------------------------------
 			if (rectangleButton.isSelected()) {
 				newFigure = new Rectangle(startPoint, endPoint);
 				newFigure.setDrawer(drawer); //CAMBIAR!!!
@@ -122,6 +127,7 @@ public class PaintPane extends BorderPane {
 			} else {
 				return;
 			}
+			// --------------------------------------------------------------------------------------
 
 			newFigure.setLightening(lighteningCheckBox.isSelected());
 			newFigure.setDarkening(darkeningCheckBox.isSelected());
