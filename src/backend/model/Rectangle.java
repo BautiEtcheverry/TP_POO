@@ -52,6 +52,20 @@ public class Rectangle extends Figure {
         return newFigure;
     }
 
+    public Figure divideVertical(int N, int times){
+        double height = ( bottomRight.getY() - topLeft.getY()) / N; //alto de cada nuevo rectangulo
+        double length = (bottomRight.getX() - topLeft.getX()) /N;// ancho de cada nuevo rectangulo
+        double startX = topLeft.getX() + times * length; // coordenada x donde empieza cada nuevo cuadrado
+        double middle = topLeft.getY() + (bottomRight.getY() - topLeft.getY()) / 2; //medio
+        double YCoordinateTL = middle - height/2;
+        double YCoordinateBR = middle + height/2;
+        Point newCoordinateTopLeft = new Point( startX,YCoordinateTL);
+        Point newCoordinateBottomRight = new Point(startX + length, YCoordinateBR);
+        Rectangle newFigure = new Rectangle(newCoordinateTopLeft,newCoordinateBottomRight);
+        setProperties(newFigure);
+        return  newFigure;
+    }
+
     public Point getTopLeft() {
         return topLeft;
     }

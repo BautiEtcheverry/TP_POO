@@ -64,6 +64,8 @@ public abstract class Figure {
     public abstract boolean Belongs(Point punto);
 
     public abstract Figure clone(double offsetX, double offsetY);
+    public abstract Figure divideVertical(int N, int Times);
+
     protected void setProperties(Figure otherFigure){
         otherFigure.setDrawer(this.getDrawer());
         otherFigure.setLightening(this.hasLightening());
@@ -71,4 +73,6 @@ public abstract class Figure {
         otherFigure.sethMirroring(this.hasHMirroring());
         otherFigure.setvMirroring(this.hasVMirroring());
     }
+
+
 }

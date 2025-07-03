@@ -15,19 +15,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.BiFunction;
-
-
 
 public class PaintPane extends BorderPane {
 	// BackEnd
 	private final CanvasState canvasState;
-
-	//Constantes para el funcionamiento del aclaramiento y el oscuresimiento
-	private static final Color CLARIFICATION = Color.rgb(255, 255, 255, 0.7);
-	private static final Color DARKENING = Color.rgb(0, 0, 0, 0.7);
 
 	// Canvas y relacionados
 	private final Canvas canvas = new Canvas(800, 600);
@@ -74,6 +65,23 @@ public class PaintPane extends BorderPane {
 		}
 		VBox buttonsBox = new VBox(10);
 		buttonsBox.getChildren().addAll(toolsArr);
+
+		Button divideButtonH = new Button("Divide H");
+		divideButtonH.setMinWidth(90);
+		divideButtonH.setOnAction(e -> {
+			if (selectedFigure == null) {
+				statusPane.updateStatus("No hay figura seleccionada");
+				return;
+			}
+			DivideFigureHorizontal.show(selectedFigure, divides ->{
+				for(Figure figure : divides){
+					canvasState.addFigure(figure);
+				}
+				//canvasState.deleteFigure(selectedFigure);
+				redrawCanvas();
+			});
+		});
+		buttonsBox.getChildren().add(divideButtonH);
 
 		Button multiplyButton = new Button("Multiply.");
 		multiplyButton.setMinWidth(90);
@@ -274,6 +282,8 @@ public class PaintPane extends BorderPane {
 			} else {
 				gc.setStroke(Color.BLACK);
 			}
+
+			gc.setFill(fillColorPicker.getValue());
 			figure.drawSelf();
 		}
 	}

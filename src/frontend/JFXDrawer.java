@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 
 public class JFXDrawer implements Drawers{
     private GraphicsContext gc;
-    private final ColorPicker fillColorPicker = new ColorPicker(Color.YELLOW);
     private static final Color CLARIFICATION = Color.rgb(255, 255, 255, 0.7);
     private static final Color DARKENING = Color.rgb(0, 0, 0, 0.7);
 
@@ -31,7 +30,7 @@ public class JFXDrawer implements Drawers{
 
     @Override
     public void drawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis,boolean darkening,boolean lightening,boolean vMirror, boolean hMirror){
-        gc.setFill(fillColorPicker.getValue());
+
         paintE(centerPoint,sMayorAxis,sMinorAxis);
 
         if(lightening) {
@@ -53,7 +52,7 @@ public class JFXDrawer implements Drawers{
 
     @Override
     public void drawRectangle(Point topLeft,Point bottomRight,boolean darkening,boolean lightening,boolean vMirror, boolean hMirror){
-        gc.setFill(fillColorPicker.getValue());
+
         paintR(topLeft,bottomRight);
 
         if(lightening) {
@@ -70,7 +69,6 @@ public class JFXDrawer implements Drawers{
         if(hMirror){
             drawHorizontalMirrorRectangle(topLeft,bottomRight);
         }
-
     }
 
     public void drawVerticalMirrorEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis) {

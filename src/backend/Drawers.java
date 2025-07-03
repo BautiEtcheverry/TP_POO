@@ -1,12 +1,13 @@
 package backend;
 
 import backend.model.Point;
+import javafx.scene.control.ColorPicker;
 
 public interface Drawers {
     /*
     Encargada de dibujar una elipse. Tambien utilizable para circulos.
     */
-    void drawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis,boolean darkening,boolean lightening,boolean vMirror, boolean hMirror);
+    void drawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis, boolean darkening, boolean lightening, boolean vMirror, boolean hMirror);
 
     /*
     Encargada de dibujar una rectangulos. Tambien utilizable para cuadrados.
