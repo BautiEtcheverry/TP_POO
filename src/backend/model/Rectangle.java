@@ -52,7 +52,7 @@ public class Rectangle extends Figure {
         return newFigure;
     }
 
-    public Figure divideVertical(int N, int times){
+    public Figure divideHorizontal(int N, int times){
         double height = ( bottomRight.getY() - topLeft.getY()) / N; //alto de cada nuevo rectangulo
         double length = (bottomRight.getX() - topLeft.getX()) /N;// ancho de cada nuevo rectangulo
         double startX = topLeft.getX() + times * length; // coordenada x donde empieza cada nuevo cuadrado

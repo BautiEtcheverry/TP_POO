@@ -77,7 +77,7 @@ public class PaintPane extends BorderPane {
 				for(Figure figure : divides){
 					canvasState.addFigure(figure);
 				}
-				//canvasState.deleteFigure(selectedFigure);
+				canvasState.deleteFigure(selectedFigure);
 				redrawCanvas();
 			});
 		});

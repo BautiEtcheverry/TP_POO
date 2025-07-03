@@ -36,7 +36,7 @@ public class DivideFigureHorizontal {
                 List<Figure> divides = new ArrayList<>();
 
                 for (int i = 0; i< n; i++) {
-                    divides.add(figure.divideVertical(n, i));
+                    divides.add(figure.divideHorizontal(n, i));
                 }
 
                 clonesCons.accept(divides);
