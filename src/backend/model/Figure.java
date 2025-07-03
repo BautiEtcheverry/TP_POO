@@ -87,7 +87,7 @@ public abstract class Figure {
 
     }
     public abstract Figure divideHorizontal(int N, int times);
-
+    public abstract Figure divideVertical(int N, int times);
 
 
 

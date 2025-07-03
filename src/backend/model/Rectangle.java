@@ -1,6 +1,8 @@
 package backend.model;
 
 
+import java.io.FileFilter;
+
 public class Rectangle extends Figure {
 
     private final Point topLeft, bottomRight;
@@ -48,6 +50,7 @@ public class Rectangle extends Figure {
         return newFigure;
     }
 
+
     public Figure divideHorizontal(int N, int times){
         double height = ( bottomRight.getY() - topLeft.getY()) / N; //alto de cada nuevo rectangulo
         double length = (bottomRight.getX() - topLeft.getX()) /N;// ancho de cada nuevo rectangulo
@@ -57,6 +60,20 @@ public class Rectangle extends Figure {
         double YCoordinateBR = middle + height/2;
         Point newCoordinateTopLeft = new Point( startX,YCoordinateTL);
         Point newCoordinateBottomRight = new Point(startX + length, YCoordinateBR);
+        Rectangle newFigure = new Rectangle(newCoordinateTopLeft,newCoordinateBottomRight);
+        setProperties(newFigure);
+        return  newFigure;
+    }
+
+    public Figure divideVertical(int N, int times){
+        double height = ( bottomRight.getY() - topLeft.getY()) / N;
+        double length = (bottomRight.getX() - topLeft.getX()) /N;
+        double middle =  (topLeft.getX() - bottomRight.getX()) /2;
+        double startY = bottomRight.getY() + height * times;
+        double XCoordinateTL = middle + length/2;
+        double XCoordinateBR = middle - length/2;
+        Point newCoordinateTopLeft = new Point( XCoordinateBR, startY + height );
+        Point newCoordinateBottomRight = new Point(XCoordinateBR, startY);
         Rectangle newFigure = new Rectangle(newCoordinateTopLeft,newCoordinateBottomRight);
         setProperties(newFigure);
         return  newFigure;

@@ -50,12 +50,26 @@ public class Ellipse extends Figure {
     }
 
     public Figure divideHorizontal(int N,int times){
-        //cada vez que lo llame
-        Ellipse newFigure = new Ellipse(centerPoint, sMayorAxis/N, sMinorAxis);
+        double newCenterY = centerPoint.getY();
+        double newSMayorAxis = sMayorAxis/N;
+        double newSMinorAxis =sMinorAxis/N;
+        double newCenterX = centerPoint.getX() + newSMayorAxis * times;
+        Point newCenterPoint = new Point(newCenterX,newCenterY);
+        Ellipse newFigure = new Ellipse(newCenterPoint,newSMayorAxis, newSMinorAxis);
         setProperties(newFigure);
         return newFigure;
     }
 
+    public Figure divideVertical(int N, int times){
+        double newCenterY = centerPoint.getY();
+        double newSMayorAxis = sMayorAxis/N;
+        double newSMinorAxis =sMinorAxis/N;
+        double newCenterX = centerPoint.getX() + newSMayorAxis * times;
+        Point newCenterPoint = new Point(newCenterX,newCenterY);
+        Ellipse newFigure = new Ellipse(newCenterPoint,newSMayorAxis, newSMinorAxis);
+        setProperties(newFigure);
+        return newFigure;
+    };
     public Point getCenterPoint() {
         return centerPoint;
     }

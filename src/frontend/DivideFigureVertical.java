@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class DivideFigureHorizontal {
-
+public class DivideFigureVertical {
     public static void show(Figure figure, Consumer<List<Figure>> clonesCons){
         Stage pop = new Stage();
         pop.initModality(Modality.APPLICATION_MODAL);
@@ -33,13 +32,13 @@ public class DivideFigureHorizontal {
                 int n = Integer.parseInt(input.getText().trim());
                 if (n < 1) throw new NumberFormatException();
 
-                List<Figure> dividesH = new ArrayList<>();
+                List<Figure> dividesV = new ArrayList<>();
 
                 for (int i = 0; i< n; i++) {
-                    dividesH.add(figure.divideHorizontal(n, i));
+                    dividesV.add(figure.divideVertical(n, i));
                 }
 
-                clonesCons.accept(dividesH);
+                clonesCons.accept(dividesV);
                 pop.close();
             } catch (NumberFormatException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Ingrese un número entero", ButtonType.OK);
@@ -52,5 +51,4 @@ public class DivideFigureHorizontal {
         pop.setScene(new Scene(root));
         pop.show();
     }
-
 }
