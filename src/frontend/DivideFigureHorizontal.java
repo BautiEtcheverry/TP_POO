@@ -33,13 +33,13 @@ public class DivideFigureHorizontal {
                 int n = Integer.parseInt(input.getText().trim());
                 if (n < 1) throw new NumberFormatException();
 
-                List<Figure> divides = new ArrayList<>();
+                List<Figure> dividesH = new ArrayList<>();
 
                 for (int i = 0; i< n; i++) {
-                    divides.add(figure.divideHorizontal(n, i));
+                    dividesH.add(figure.divideHorizontal(n, i));
                 }
 
-                clonesCons.accept(divides);
+                clonesCons.accept(dividesV);
                 pop.close();
             } catch (NumberFormatException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Ingrese un número entero", ButtonType.OK);
