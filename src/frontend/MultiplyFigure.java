@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class MultiplyFigure {
-    private static final double XOFFSET = 10.0;
-    private static final double YOFFSET = 5.0;
+    private static final double XOFFSET = 30.0;
+    private static final double YOFFSET = 30.0;
 
     public static void show(Figure figure, Consumer<List<Figure>> clonesCons){
         Stage pop = new Stage();
@@ -38,7 +38,7 @@ public class MultiplyFigure {
 
                 List<Figure> clones = new ArrayList<>();
                 for (int i = 1; i < n; i++) {
-                    clones.add(figure.clone(i * XOFFSET, i * XOFFSET));
+                    clones.add(figure.clone(i * XOFFSET, i * YOFFSET));
                 }
 
                 clonesCons.accept(clones);
