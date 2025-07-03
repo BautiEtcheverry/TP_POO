@@ -1,15 +1,12 @@
 package frontend;
-
 import backend.model.Figure;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;

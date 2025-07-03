@@ -73,7 +73,6 @@ public class JFXDrawer implements Drawers{
         if(hMirror){
             drawHorizontalMirrorRectangle(topLeft,bottomRight);
         }
-
     }
 
     public void drawVerticalMirrorEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis) {
