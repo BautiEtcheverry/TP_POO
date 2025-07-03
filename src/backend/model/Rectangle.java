@@ -15,7 +15,7 @@ public class Rectangle extends Figure {
     }
 
     public void drawSelf(){
-        getDrawer().drawRectangle(topLeft,bottomRight,this.hasDarkening(),this.hasLightening(),hasVMirroring(),hasHMirroring());
+        getDrawer().drawRectangle(topLeft,bottomRight,this.hasDarkening(),this.hasLightening(),hasVMirroring(),hasHMirroring(), isSelected(), getBorderType());
     }
 
     public void drawVerticalMirror(){

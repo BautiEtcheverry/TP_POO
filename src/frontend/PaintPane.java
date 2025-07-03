@@ -85,7 +85,7 @@ public class PaintPane extends BorderPane {
 
 		Button multiplyButton = new Button("Multiply.");
 		multiplyButton.setMinWidth(90);
-		multiplyButton.setOnAction(e -> {
+		multiplyButton.setOnAction(event-> {
 			if (selectedFigure == null) {
 				statusPane.updateStatus("No hay figura seleccionada");
 				return;
@@ -101,8 +101,14 @@ public class PaintPane extends BorderPane {
 
 		Button moveButton = new Button("Trasladar");
 		moveButton.setMinWidth(90);
-		moveButton.setOnAction(e -> MoveFigure.show(selectedFigure, this::redrawCanvas));
+		moveButton.setOnAction(event -> MoveFigure.show(selectedFigure, this::redrawCanvas));
 		buttonsBox.getChildren().add(moveButton);
+
+		ComboBox<BorderType> borderSelector = new ComboBox<>();
+		borderSelector.getItems().addAll(BorderType.values());
+		borderSelector.setValue(BorderType.NORMAL); // valor inicial
+		buttonsBox.getChildren().add(borderSelector);
+
 
 		buttonsBox.getChildren().add(fillColorPicker);
 		buttonsBox.setPadding(new Insets(5));
@@ -114,6 +120,14 @@ public class PaintPane extends BorderPane {
 		effectBar.setPadding(new Insets(5));
 		effectBar.setStyle("-fx-background-color: #999;");
 		setTop(effectBar);
+
+		// Cuando cambia el valor del combo, se lo asigna a la figura seleccionada
+		borderSelector.setOnAction(e -> {
+			if (selectedFigure != null) {
+				selectedFigure.setBorderType(borderSelector.getValue());
+				redrawCanvas();
+			}
+		});
 
 
 		canvas.setOnMousePressed(event -> {
@@ -158,6 +172,7 @@ public class PaintPane extends BorderPane {
 			newFigure.setDarkening(darkeningCheckBox.isSelected());
 			newFigure.sethMirroring(hMirroringCheckBox.isSelected());
 			newFigure.setvMirroring(vMirroringCheckBox.isSelected());
+			newFigure.setBorderType(borderSelector.getValue());
 			canvasState.addFigure(newFigure);
 
 			startPoint = null;
@@ -193,7 +208,6 @@ public class PaintPane extends BorderPane {
 						label.append(figure.toString());
 					}
 				}
-
 				if (found) {
 					statusPane.updateStatus(label.toString());
 				} else {
@@ -241,7 +255,6 @@ public class PaintPane extends BorderPane {
 		lighteningCheckBox.setOnAction(event -> {
 			if (selectedFigure != null) {
 				selectedFigure.setLightening(lighteningCheckBox.isSelected());
-
 				redrawCanvas();
 			}
 		});
@@ -249,7 +262,6 @@ public class PaintPane extends BorderPane {
 		darkeningCheckBox.setOnAction(event -> {
 			if (selectedFigure != null) {
 				selectedFigure.setDarkening(darkeningCheckBox.isSelected());
-
 				redrawCanvas();
 			}
 		});
@@ -274,12 +286,12 @@ public class PaintPane extends BorderPane {
 
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		gc.setLineWidth(1);
+		gc.setLineWidth(10);
 
-		for(Figure figure : canvasState.figures()) {
-			if(figure == selectedFigure) {
+		for (Figure figure : canvasState.figures()) {
+			if(figure==selectedFigure){
 				gc.setStroke(Color.RED);
-			} else {
+			}else{
 				gc.setStroke(Color.BLACK);
 			}
 
