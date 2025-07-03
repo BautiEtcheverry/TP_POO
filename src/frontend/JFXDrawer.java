@@ -2,6 +2,7 @@ package frontend;
 import backend.Drawers;
 import backend.model.BorderType;
 import backend.model.Point;
+import backend.model.RGBColor;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.paint.Color;
@@ -135,7 +136,10 @@ public class JFXDrawer implements Drawers{
             }
         }
     }
-
+    //Metodo que recibe un RGBColor(clase del backEnd) y devuelve un Color(de javaFx).
+    public Color toColor(RGBColor color){
+        return new Color(color.getRed(),color.getGreen(),color.getBlue(),color.getOpacity());
+    }
 
 
 }

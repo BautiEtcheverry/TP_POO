@@ -129,6 +129,13 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
+		fillColorPicker.setOnAction(event -> {
+			if (selectedFigure != null) {
+				Color color = fillColorPicker.getValue();
+				selectedFigure.setFillColor(color.getRed(), color.getGreen(), color.getBlue(), color.getOpacity());
+				redrawCanvas();
+			}
+		});
 
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
@@ -146,22 +153,25 @@ public class PaintPane extends BorderPane {
 
 			//ESTO HAY QUE CAMBIARLO ES MUY IMPERATIVO.
 			// --------------------------------------------------------------------------------------
+			Color color = fillColorPicker.getValue();
+			RGBColor figureColor = new RGBColor(color.getRed(), color.getGreen(), color.getBlue(), color.getOpacity());
+
 			if (rectangleButton.isSelected()) {
-				newFigure = new Rectangle(startPoint, endPoint);
+				newFigure = new Rectangle(startPoint, endPoint, figureColor);
 				newFigure.setDrawer(drawer); //CAMBIAR!!!
 			} else if (circleButton.isSelected()) {
 				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
-				newFigure = new Circle(startPoint, circleRadius);
+				newFigure = new Circle(startPoint, circleRadius, figureColor);
 				newFigure.setDrawer(drawer); //CAMBIAR!!!
 			} else if (squareButton.isSelected()) {
 				double size = Math.abs(endPoint.getX() - startPoint.getY());
-				newFigure = new Square(startPoint, size);
+				newFigure = new Square(startPoint, size, figureColor);
 				newFigure.setDrawer(drawer); //CAMBIAR!!!
 			} else if (ellipseButton.isSelected()) {
 				Point centerPoint = new Point(Math.abs(endPoint.getX() + startPoint.getX()) / 2, (Math.abs((endPoint.getY() + startPoint.getY())) / 2));
 				double sMayorAxis = Math.abs(endPoint.getX() - startPoint.getX());
 				double sMinorAxis = Math.abs(endPoint.getY() - startPoint.getY());
-				newFigure = new Ellipse(centerPoint, sMayorAxis, sMinorAxis);
+				newFigure = new Ellipse(centerPoint, sMayorAxis, sMinorAxis, figureColor);
 				newFigure.setDrawer(drawer); //CAMBIAR!!!
 			} else {
 				return;
@@ -295,7 +305,7 @@ public class PaintPane extends BorderPane {
 				gc.setStroke(Color.BLACK);
 			}
 
-			gc.setFill(fillColorPicker.getValue());
+			//gc.setFill(fillColorPicker.getValue());
 			figure.drawSelf();
 		}
 	}

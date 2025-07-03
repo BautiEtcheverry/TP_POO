@@ -23,12 +23,11 @@ public class RGBColor {
     public double getRed() {
         return red;
     }
-
     public double getBlue() {
         return blue;
     }
-
     public double getGreen() {
         return green;
     }
+    public double getOpacity(){return opacity;}
 }

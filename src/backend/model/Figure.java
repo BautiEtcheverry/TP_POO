@@ -8,6 +8,7 @@ public abstract class Figure {
     private boolean hMirroring;
     private boolean vMirroring;
     private boolean selected;
+    private RGBColor fillColor;
     private BorderType borde;
 
     //Instancia de una interfaz que debe de ser implementada por el front para dibujar las figuras.
@@ -18,6 +19,16 @@ public abstract class Figure {
     public void setDrawer(Drawers drawer){
         this.drawer=drawer;
     }
+    public void setFillColor(double red, double green, double blue, double opacity){
+        setFillColorRGB(new RGBColor(red,green,blue,opacity));
+    }
+    protected void setFillColorRGB(RGBColor color){
+        this.fillColor = color;
+    }
+    public RGBColor getfillColor(){
+        return fillColor;
+    }
+
 
     /*
         Metodo para que cada figura se dibuje en el canvas 2d.

@@ -5,10 +5,11 @@ public class Ellipse extends Figure {
     protected final Point centerPoint;
     protected final double sMayorAxis, sMinorAxis;
 
-    public Ellipse(Point centerPoint, double sMayorAxis, double sMinorAxis) {
+    public Ellipse(Point centerPoint, double sMayorAxis, double sMinorAxis, RGBColor fillColor) {
         this.centerPoint = centerPoint;
         this.sMayorAxis = sMayorAxis;
         this.sMinorAxis = sMinorAxis;
+        setFillColorRGB(fillColor);
     }
 
     public void drawSelf(){
@@ -44,14 +45,14 @@ public class Ellipse extends Figure {
     }
     @Override
     public Figure clone(double offsetX, double offsetY){
-        Ellipse newFigure = new Ellipse(new Point(centerPoint.getX()+offsetX, centerPoint.getY()+offsetY), sMayorAxis,sMinorAxis);
+        Ellipse newFigure = new Ellipse(new Point(centerPoint.getX()+offsetX, centerPoint.getY()+offsetY), sMayorAxis,sMinorAxis, getfillColor());
         setProperties(newFigure);
         return newFigure;
     }
 
     public Figure divideHorizontal(int N,int times){
         //cada vez que lo llame
-        Ellipse newFigure = new Ellipse(centerPoint, sMayorAxis/N, sMinorAxis);
+        Ellipse newFigure = new Ellipse(centerPoint, sMayorAxis/N, sMinorAxis,  getfillColor());
         setProperties(newFigure);
         return newFigure;
     }

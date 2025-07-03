@@ -5,15 +5,16 @@ public class Rectangle extends Figure {
 
     private final Point topLeft, bottomRight;
 
-    public Rectangle(Point topLeft, Point bottomRight) {
+    public Rectangle(Point topLeft, Point bottomRight, RGBColor fillColor) {
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
+        setFillColorRGB(fillColor);
     }
 
     public void drawSelf(){
         getDrawer().drawRectangle(topLeft,bottomRight,this.hasDarkening(),this.hasLightening(),hasVMirroring(),hasHMirroring(), isSelected(), getBorderType());
     }
-
+    @Override
     public void drawVerticalMirror(){
         getDrawer().drawVerticalMirrorRectangle(topLeft,bottomRight);
     }
@@ -43,7 +44,8 @@ public class Rectangle extends Figure {
     public Figure clone(double offsetX, double offsetY){
         Rectangle newFigure = new Rectangle(
                 new Point(topLeft.getX()+offsetX, topLeft.getY()+offsetY),
-                new Point(bottomRight.getX()+offsetX, bottomRight.getY()+offsetY));
+                new Point(bottomRight.getX()+offsetX, bottomRight.getY()+offsetY),
+                getfillColor());
         setProperties(newFigure);
         return newFigure;
     }
@@ -57,7 +59,7 @@ public class Rectangle extends Figure {
         double YCoordinateBR = middle + height/2;
         Point newCoordinateTopLeft = new Point( startX,YCoordinateTL);
         Point newCoordinateBottomRight = new Point(startX + length, YCoordinateBR);
-        Rectangle newFigure = new Rectangle(newCoordinateTopLeft,newCoordinateBottomRight);
+        Rectangle newFigure = new Rectangle(newCoordinateTopLeft,newCoordinateBottomRight, getfillColor());
         setProperties(newFigure);
         return  newFigure;
     }
