@@ -77,7 +77,7 @@ public class PaintPane extends BorderPane {
 
 		Button multiplyButton = new Button("Multiply.");
 		multiplyButton.setMinWidth(90);
-		multiplyButton.setOnAction(e -> {
+		multiplyButton.setOnAction(event-> {
 			if (selectedFigure == null) {
 				statusPane.updateStatus("No hay figura seleccionada");
 				return;
@@ -93,7 +93,7 @@ public class PaintPane extends BorderPane {
 
 		Button moveButton = new Button("Trasladar");
 		moveButton.setMinWidth(90);
-		moveButton.setOnAction(e -> MoveFigure.show(selectedFigure, this::redrawCanvas));
+		moveButton.setOnAction(event -> MoveFigure.show(selectedFigure, this::redrawCanvas));
 		buttonsBox.getChildren().add(moveButton);
 
 		buttonsBox.getChildren().add(fillColorPicker);
