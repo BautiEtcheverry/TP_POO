@@ -111,8 +111,6 @@ public class JFXDrawer implements Drawers{
         if (type == null) {
             type = BorderType.NORMAL;
         }
-        gc.setStroke(selected ? Color.RED : Color.BLACK);
-
 
         switch (type) {
             case NORMAL -> {

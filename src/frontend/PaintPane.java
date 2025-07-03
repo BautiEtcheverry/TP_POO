@@ -200,7 +200,6 @@ public class PaintPane extends BorderPane {
 						label.append(figure.toString());
 					}
 				}
-
 				if (found) {
 					statusPane.updateStatus(label.toString());
 				} else {
@@ -279,13 +278,16 @@ public class PaintPane extends BorderPane {
 
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		gc.setLineWidth(1);
+		gc.setLineWidth(10);
 
 		for (Figure figure : canvasState.figures()) {
-			figure.setSelected(figure == selectedFigure); // 🔴 Setea si está seleccionada
-			figure.drawSelf();                            // el `Drawer` usa eso para aplicar el borde
+			if(figure==selectedFigure){
+				gc.setStroke(Color.RED);
+			}else{
+				gc.setStroke(Color.BLACK);
+			}
+			figure.drawSelf();
 		}
-
 	}
 
 }
