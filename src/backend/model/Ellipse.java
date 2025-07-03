@@ -56,7 +56,7 @@ public class Ellipse extends Figure {
         double newSMinorAxis =sMinorAxis/N;
         double newCenterX = centerPoint.getX() + newSMayorAxis * times;
         Point newCenterPoint = new Point(newCenterX,newCenterY);
-        Ellipse newFigure = new Ellipse(newCenterPoint,newSMayorAxis, newSMinorAxis);
+        Ellipse newFigure = new Ellipse(newCenterPoint,newSMayorAxis, newSMinorAxis, getfillColor());
         setProperties(newFigure);
         return newFigure;
     }
@@ -67,7 +67,7 @@ public class Ellipse extends Figure {
         double newSMinorAxis =sMinorAxis/N;
         double newCenterX = centerPoint.getX() + newSMayorAxis * times;
         Point newCenterPoint = new Point(newCenterX,newCenterY);
-        Ellipse newFigure = new Ellipse(newCenterPoint,newSMayorAxis, newSMinorAxis);
+        Ellipse newFigure = new Ellipse(newCenterPoint,newSMayorAxis, newSMinorAxis, getfillColor());
         setProperties(newFigure);
         return newFigure;
     };

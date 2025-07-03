@@ -76,7 +76,7 @@ public class Rectangle extends Figure {
         double XCoordinateBR = middle - length/2;
         Point newCoordinateTopLeft = new Point( XCoordinateBR, startY + height );
         Point newCoordinateBottomRight = new Point(XCoordinateBR, startY);
-        Rectangle newFigure = new Rectangle(newCoordinateTopLeft,newCoordinateBottomRight);
+        Rectangle newFigure = new Rectangle(newCoordinateTopLeft,newCoordinateBottomRight, getfillColor());
         setProperties(newFigure);
         return  newFigure;
     }
