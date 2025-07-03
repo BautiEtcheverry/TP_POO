@@ -53,19 +53,20 @@ public class Ellipse extends Figure {
     public Figure divideHorizontal(int N,int times){
         double newCenterY = centerPoint.getY();
         double newSMayorAxis = sMayorAxis/N;
-        double newSMinorAxis =sMinorAxis/N;
-        double newCenterX = centerPoint.getX() + newSMayorAxis * times;
-        Point newCenterPoint = new Point(newCenterX,newCenterY);
+        double newSMinorAxis = sMinorAxis/N;
+        double newCenterX = centerPoint.getX() - sMayorAxis/2 + (newSMayorAxis/2);
+        Point newCenterPoint = new Point(newCenterX + newSMayorAxis * times ,newCenterY);
         Ellipse newFigure = new Ellipse(newCenterPoint,newSMayorAxis, newSMinorAxis, getfillColor());
         setProperties(newFigure);
         return newFigure;
     }
 
     public Figure divideVertical(int N, int times){
-        double newCenterY = centerPoint.getY();
+        double newCenterX= centerPoint.getX();
         double newSMayorAxis = sMayorAxis/N;
-        double newSMinorAxis =sMinorAxis/N;
-        double newCenterX = centerPoint.getX() + newSMayorAxis * times;
+        double newSMinorAxis = sMinorAxis/N;
+        double startY = centerPoint.getY() - sMinorAxis/2 + newSMinorAxis/2 ;
+        double newCenterY= startY + newSMinorAxis * times;
         Point newCenterPoint = new Point(newCenterX,newCenterY);
         Ellipse newFigure = new Ellipse(newCenterPoint,newSMayorAxis, newSMinorAxis, getfillColor());
         setProperties(newFigure);

@@ -17,7 +17,7 @@ public class DivideFigureVertical {
     public static void show(Figure figure, Consumer<List<Figure>> clonesCons){
         Stage pop = new Stage();
         pop.initModality(Modality.APPLICATION_MODAL);
-        pop.setTitle("Divide Horizontally");
+        pop.setTitle("Divide Vertically");
 
         Label label = new Label("Ingrese N:");
         TextField input = new TextField();
@@ -35,7 +35,7 @@ public class DivideFigureVertical {
                 List<Figure> dividesV = new ArrayList<>();
 
                 for (int i = 0; i< n; i++) {
-                    dividesV.add(figure.divideVertical(n, i));
+                    dividesV.add(figure.divideVertical(n,i));
                 }
 
                 clonesCons.accept(dividesV);

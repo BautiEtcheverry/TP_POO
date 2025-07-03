@@ -1,6 +1,8 @@
 package backend.model;
 
 
+import org.w3c.dom.html.HTMLImageElement;
+
 import java.io.FileFilter;
 
 public class Rectangle extends Figure {
@@ -67,18 +69,18 @@ public class Rectangle extends Figure {
         return  newFigure;
     }
 
-    public Figure divideVertical(int N, int times){
+    public Figure divideVertical(int N,  int times){
         double height = ( bottomRight.getY() - topLeft.getY()) / N;
-        double length = (bottomRight.getX() - topLeft.getX()) /N;
-        double middle =  (topLeft.getX() - bottomRight.getX()) /2;
-        double startY = bottomRight.getY() + height * times;
-        double XCoordinateTL = middle + length/2;
-        double XCoordinateBR = middle - length/2;
-        Point newCoordinateTopLeft = new Point( XCoordinateBR, startY + height );
+        double length = (bottomRight.getX() - topLeft.getX()) / N;
+        double middle = bottomRight.getX() - (bottomRight.getX() - topLeft.getX()) / 2;
+        double startY = bottomRight.getY() - height * times ;
+        double XCoordinateTL = middle - length/2;
+        double XCoordinateBR = middle + length/2;
+        Point newCoordinateTopLeft = new Point( XCoordinateTL, startY - height );
         Point newCoordinateBottomRight = new Point(XCoordinateBR, startY);
         Rectangle newFigure = new Rectangle(newCoordinateTopLeft,newCoordinateBottomRight, getfillColor());
         setProperties(newFigure);
-        return  newFigure;
+        return newFigure;
     }
 
     public Point getTopLeft() {

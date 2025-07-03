@@ -73,15 +73,32 @@ public class PaintPane extends BorderPane {
 				statusPane.updateStatus("No hay figura seleccionada");
 				return;
 			}
-			DivideFigureHorizontal.show(selectedFigure, divides ->{
-				for(Figure figure : divides){
+			DivideFigureHorizontal.show(selectedFigure, dividesH ->{
+				for(Figure figure : dividesH){
 					canvasState.addFigure(figure);
 				}
-				canvasState.deleteFigure(selectedFigure);
+				//canvasState.deleteFigure(selectedFigure);
 				redrawCanvas();
 			});
 		});
 		buttonsBox.getChildren().add(divideButtonH);
+
+		Button divideButtonV = new Button("Divide V");
+		divideButtonV.setMinWidth(90);
+		divideButtonV.setOnAction(e -> {
+			if (selectedFigure == null) {
+				statusPane.updateStatus("No hay figura seleccionada");
+				return;
+			}
+			DivideFigureVertical.show(selectedFigure, dividesV ->{
+				for(Figure figure : dividesV){
+					canvasState.addFigure(figure);
+				}
+				//canvasState.deleteFigure(selectedFigure);
+				redrawCanvas();
+			});
+		});
+		buttonsBox.getChildren().add(divideButtonV);
 
 		Button multiplyButton = new Button("Multiply.");
 		multiplyButton.setMinWidth(90);
