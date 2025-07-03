@@ -1,6 +1,6 @@
 package backend;
 
-import backend.model.BorderType;
+
 import backend.model.Ellipse;
 import backend.model.Point;
 import backend.model.Rectangle;
