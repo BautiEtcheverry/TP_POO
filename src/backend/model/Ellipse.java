@@ -13,14 +13,14 @@ public class Ellipse extends Figure {
     }
 
     public void drawSelf(){
-        getDrawer().drawEllipse(centerPoint, sMayorAxis,sMinorAxis,this.hasDarkening(),this.hasLightening(),hasVMirroring(),hasHMirroring(), isSelected(), getBorderType());
+        getDrawer().drawEllipse(this);
     }
 
-    public void drawVerticalMirror(){
+    public void drawVerticalMirror(Figure figure){
         getDrawer().drawVerticalMirrorEllipse(centerPoint,sMayorAxis,sMinorAxis);
     }
 
-    public void drawHorizontalMirror(){
+    public void drawHorizontalMirror(Figure figure){
         getDrawer().drawHorizontalMirrorEllipse(centerPoint,sMayorAxis,sMinorAxis);
     }
 
@@ -51,12 +51,26 @@ public class Ellipse extends Figure {
     }
 
     public Figure divideHorizontal(int N,int times){
-        //cada vez que lo llame
-        Ellipse newFigure = new Ellipse(centerPoint, sMayorAxis/N, sMinorAxis,  getfillColor());
+        double newCenterY = centerPoint.getY();
+        double newSMayorAxis = sMayorAxis/N;
+        double newSMinorAxis =sMinorAxis/N;
+        double newCenterX = centerPoint.getX() + newSMayorAxis * times;
+        Point newCenterPoint = new Point(newCenterX,newCenterY);
+        Ellipse newFigure = new Ellipse(newCenterPoint,newSMayorAxis, newSMinorAxis, getfillColor());
         setProperties(newFigure);
         return newFigure;
     }
 
+    public Figure divideVertical(int N, int times){
+        double newCenterY = centerPoint.getY();
+        double newSMayorAxis = sMayorAxis/N;
+        double newSMinorAxis =sMinorAxis/N;
+        double newCenterX = centerPoint.getX() + newSMayorAxis * times;
+        Point newCenterPoint = new Point(newCenterX,newCenterY);
+        Ellipse newFigure = new Ellipse(newCenterPoint,newSMayorAxis, newSMinorAxis, getfillColor());
+        setProperties(newFigure);
+        return newFigure;
+    };
     public Point getCenterPoint() {
         return centerPoint;
     }

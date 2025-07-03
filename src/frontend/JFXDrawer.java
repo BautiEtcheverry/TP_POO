@@ -1,8 +1,6 @@
 package frontend;
 import backend.Drawers;
-import backend.model.BorderType;
-import backend.model.Point;
-import backend.model.RGBColor;
+import backend.model.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.paint.Color;
@@ -32,47 +30,48 @@ public class JFXDrawer implements Drawers{
     }
 
     @Override
-    public void drawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis,boolean darkening,boolean lightening,boolean vMirror, boolean hMirror,boolean selected ,BorderType borde){
-        applyStrokeStyle(borde, selected);
+    public void drawEllipse(Ellipse ellipse){
+        applyStrokeStyle(ellipse.getBorderType(), ellipse.isSelected());
         gc.setFill(fillColorPicker.getValue());
-        paintE(centerPoint,sMayorAxis,sMinorAxis);
+        paintE(ellipse.getCenterPoint(),ellipse.getsMayorAxis(),ellipse.getsMinorAxis());
 
-        if(lightening) {
+        if(ellipse.hasLightening()) {
             gc.setFill(CLARIFICATION);
-            paintE(centerPoint,sMayorAxis,sMinorAxis);
+            paintE(ellipse.getCenterPoint(),ellipse.getsMayorAxis(),ellipse.getsMinorAxis());
         }
-        if(darkening) {
+        if(ellipse.hasDarkening()) {
             gc.setFill(DARKENING);
-            paintE(centerPoint,sMayorAxis,sMinorAxis);
+            paintE(ellipse.getCenterPoint(),ellipse.getsMayorAxis(),ellipse.getsMinorAxis());
         }
-        if(vMirror){
-            drawVerticalMirrorEllipse(centerPoint,sMayorAxis,sMinorAxis);
-        }
-        if(hMirror){
-            drawHorizontalMirrorEllipse(centerPoint,sMayorAxis,sMinorAxis);
-        }
+
+        mirrorDrawer(ellipse);
     }
 
 
     @Override
-    public void drawRectangle(Point topLeft,Point bottomRight,boolean darkening,boolean lightening,boolean vMirror, boolean hMirror,boolean selected ,BorderType borde){
-        applyStrokeStyle(borde, selected);
+    public void drawRectangle(Rectangle rectangle){
+        applyStrokeStyle(rectangle.getBorderType(), rectangle.isSelected());
         gc.setFill(fillColorPicker.getValue());
-        paintR(topLeft,bottomRight);
+        paintR(rectangle.getTopLeft(),rectangle.getBottomRight());
 
-        if(lightening) {
+        if(rectangle.hasLightening()) {
             gc.setFill(CLARIFICATION);
-            paintR(topLeft,bottomRight);
+            paintR(rectangle.getTopLeft(),rectangle.getBottomRight());
         }
-        if(darkening) {
+        if(rectangle.hasDarkening()) {
             gc.setFill(DARKENING);
-            paintR(topLeft,bottomRight);
+            paintR(rectangle.getTopLeft(),rectangle.getBottomRight());
         }
-        if(vMirror){
-            drawVerticalMirrorRectangle(topLeft,bottomRight);
+
+        mirrorDrawer(rectangle);
+    }
+
+    private void mirrorDrawer(Figure figure){
+        if(figure.hasVMirroring()){
+            figure.drawVerticalMirror(figure);
         }
-        if(hMirror){
-            drawHorizontalMirrorRectangle(topLeft,bottomRight);
+        if(figure.hasHMirroring()){
+            figure.drawHorizontalMirror(figure);
         }
     }
 
