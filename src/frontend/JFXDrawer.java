@@ -100,7 +100,7 @@ public class JFXDrawer implements Drawers{
 
     public void drawHorizontalMirrorEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis){
         double mirroredY = centerPoint.getY() + sMinorAxis;
-        Point mirroredCenter = new Point(centerPoint.getX(), mirroredY);
+        Point mirroredCenter = new Point(centerPoint.getX(), mirroredY);`
         paintE(mirroredCenter, sMayorAxis, sMinorAxis);
     }
 
