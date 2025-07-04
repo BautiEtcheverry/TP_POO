@@ -19,7 +19,7 @@ import javafx.scene.control.Label;
 public class PaintPane extends BorderPane {
 	// BackEnd
 	private final CanvasState canvasState;
-
+	private FigureFormat lastFormat;//Ultimo formato que se le copio a una figura.
 	// Canvas y relacionados
 	private final Canvas canvas = new Canvas(800, 600);
 	private final GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -27,8 +27,8 @@ public class PaintPane extends BorderPane {
 	// Botones Barra Izquierda
 	private final ToggleButton selectionButton = new ToggleButton("Seleccionar");
 	private final ToggleButton rectangleButton = new ToggleButton("Rectángulo");
-	private final ToggleButton circleButton = new ToggleButton("Círculo");
 	private final ToggleButton squareButton = new ToggleButton("Cuadrado");
+	private final ToggleButton circleButton = new ToggleButton("Círculo");
 	private final ToggleButton ellipseButton = new ToggleButton("Elipse");
 	private final ToggleButton deleteButton = new ToggleButton("Borrar");
 	private final CheckBox lighteningCheckBox = new CheckBox("Aclaramiento");
@@ -56,7 +56,7 @@ public class PaintPane extends BorderPane {
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, ellipseButton, deleteButton};
+		ToggleButton[] toolsArr = {selectionButton, rectangleButton, squareButton, circleButton, ellipseButton, deleteButton};
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : toolsArr) {
 			tool.setMinWidth(90);
@@ -66,6 +66,10 @@ public class PaintPane extends BorderPane {
 		VBox buttonsBox = new VBox(10);
 		buttonsBox.getChildren().addAll(toolsArr);
 
+		ComboBox<BorderType> borderSelector = new ComboBox<>();
+		borderSelector.getItems().addAll(BorderType.values());
+		borderSelector.setValue(BorderType.NORMAL); // valor inicial
+		buttonsBox.getChildren().add(borderSelector);
 		Button divideButtonH = new Button("Divide H");
 		divideButtonH.setMinWidth(90);
 		divideButtonH.setOnAction(e -> {
@@ -121,10 +125,6 @@ public class PaintPane extends BorderPane {
 		moveButton.setOnAction(event -> MoveFigure.show(selectedFigure, this::redrawCanvas));
 		buttonsBox.getChildren().add(moveButton);
 
-		ComboBox<BorderType> borderSelector = new ComboBox<>();
-		borderSelector.getItems().addAll(BorderType.values());
-		borderSelector.setValue(BorderType.NORMAL); // valor inicial
-		buttonsBox.getChildren().add(borderSelector);
 
 
 		buttonsBox.getChildren().add(fillColorPicker);
@@ -141,7 +141,7 @@ public class PaintPane extends BorderPane {
 		// Cuando cambia el valor del combo, se lo asigna a la figura seleccionada
 		borderSelector.setOnAction(e -> {
 			if (selectedFigure != null) {
-				selectedFigure.setBorderType(borderSelector.getValue());
+				selectedFigure.getFormat().setBorderType(borderSelector.getValue());
 				redrawCanvas();
 			}
 		});
@@ -149,7 +149,7 @@ public class PaintPane extends BorderPane {
 		fillColorPicker.setOnAction(event -> {
 			if (selectedFigure != null) {
 				Color color = fillColorPicker.getValue();
-				selectedFigure.setFillColor(color.getRed(), color.getGreen(), color.getBlue(), color.getOpacity());
+				selectedFigure.getFormat().setFillColor(color.getRed(), color.getGreen(), color.getBlue(), color.getOpacity());
 				redrawCanvas();
 			}
 		});
@@ -195,11 +195,11 @@ public class PaintPane extends BorderPane {
 			}
 			// --------------------------------------------------------------------------------------
 
-			newFigure.setLightening(lighteningCheckBox.isSelected());
-			newFigure.setDarkening(darkeningCheckBox.isSelected());
-			newFigure.sethMirroring(hMirroringCheckBox.isSelected());
-			newFigure.setvMirroring(vMirroringCheckBox.isSelected());
-			newFigure.setBorderType(borderSelector.getValue());
+			newFigure.getFormat().setLightening(lighteningCheckBox.isSelected());
+			newFigure.getFormat().setDarkening(darkeningCheckBox.isSelected());
+			newFigure.getFormat().setHMirroring(hMirroringCheckBox.isSelected());
+			newFigure.getFormat().setVMirroring(vMirroringCheckBox.isSelected());
+			newFigure.getFormat().setBorderType(borderSelector.getValue());
 			canvasState.addFigure(newFigure);
 
 			startPoint = null;
@@ -243,10 +243,10 @@ public class PaintPane extends BorderPane {
 				}
 
 				if (found) {
-					lighteningCheckBox.setSelected(selectedFigure.hasLightening());
-					darkeningCheckBox.setSelected(selectedFigure.hasDarkening());
-					hMirroringCheckBox.setSelected(selectedFigure.hasHMirroring());
-					vMirroringCheckBox.setSelected(selectedFigure.hasVMirroring());
+					lighteningCheckBox.setSelected(selectedFigure.getFormat().hasLightening());
+					darkeningCheckBox.setSelected(selectedFigure.getFormat().hasDarkening());
+					hMirroringCheckBox.setSelected(selectedFigure.getFormat().hasHMirroring());
+					vMirroringCheckBox.setSelected(selectedFigure.getFormat().hasVMirroring());
 					statusPane.updateStatus(label.toString());
 				} else {
 					selectedFigure = null;
@@ -281,28 +281,28 @@ public class PaintPane extends BorderPane {
 
 		lighteningCheckBox.setOnAction(event -> {
 			if (selectedFigure != null) {
-				selectedFigure.setLightening(lighteningCheckBox.isSelected());
+				selectedFigure.getFormat().setLightening(lighteningCheckBox.isSelected());
 				redrawCanvas();
 			}
 		});
 
 		darkeningCheckBox.setOnAction(event -> {
 			if (selectedFigure != null) {
-				selectedFigure.setDarkening(darkeningCheckBox.isSelected());
+				selectedFigure.getFormat().setDarkening(darkeningCheckBox.isSelected());
 				redrawCanvas();
 			}
 		});
 
 		hMirroringCheckBox.setOnAction(event ->{
 			if(selectedFigure != null){
-				selectedFigure.sethMirroring(hMirroringCheckBox.isSelected());
+				selectedFigure.getFormat().setHMirroring(hMirroringCheckBox.isSelected());
 			}
 			redrawCanvas();
 		});
 
 		vMirroringCheckBox.setOnAction(event ->{
 			if(selectedFigure != null){
-				selectedFigure.setvMirroring(vMirroringCheckBox.isSelected());
+				selectedFigure.getFormat().setVMirroring(vMirroringCheckBox.isSelected());
 			}
 			redrawCanvas();
 		});

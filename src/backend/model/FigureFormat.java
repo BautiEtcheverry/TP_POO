@@ -9,57 +9,57 @@ public class FigureFormat {
     private RGBColor fillColor;
     private BorderType border;
 
-    protected void setFillColor(double red, double green, double blue, double opacity){
+    public void setFillColor(double red, double green, double blue, double opacity){
         setFillColorRGB(new RGBColor(red,green,blue,opacity));
     }
-    protected void setFillColorRGB(RGBColor color){
+    public void setFillColorRGB(RGBColor color){
         this.fillColor = color;
     }
-    protected RGBColor getFillColor() {
+    public RGBColor getFillColor() {
         return fillColor;
     }
-    protected boolean getLightening(){
+    public boolean hasLightening(){
         return lightening;
     }
-    protected  boolean getDarkening(){
+    public  boolean hasDarkening(){
         return darkening;
     }
-    protected boolean getHMirroring(){
+    public boolean hasHMirroring(){
         return  hMirroring;
     }
-    protected boolean getVMirroring(){
+    public boolean hasVMirroring(){
         return  vMirroring;
     }
-    protected boolean isSelected(){
+    public boolean isSelected(){
         return selected;
     }
-    protected BorderType getBorderType(){
+    public BorderType getBorderType(){
         return border;
     }
-    protected void setBorderType(BorderType borderType) {
+    public void setBorderType(BorderType borderType) {
         this.border = borderType;
     }
-    protected void setLightening(boolean state) {
+    public void setLightening(boolean state) {
         lightening = state;
     }
-    protected void setDarkening(boolean state){
+    public void setDarkening(boolean state){
         darkening = state;
     }
-    protected void setHMirroring(boolean state){
+    public void setHMirroring(boolean state){
         hMirroring = state;
     }
-    protected void setVMirroring(boolean state){
+    public void setVMirroring(boolean state){
         vMirroring = state;
     }
-    protected void setSelected(boolean state){
+    public void setSelected(boolean state){
         selected = state;
     }
-    protected void setFormat(FigureFormat otherFigure){
-        otherFigure.setLightening(this.getLightening());
-        otherFigure.setDarkening(this.getDarkening());
-        otherFigure.setHMirroring(this.getHMirroring());
-        otherFigure.setVMirroring(this.getVMirroring());
-        otherFigure.setBorderType(this.getBorderType()); // NUEVO
+    public void setFormat(FigureFormat otherFigure){
+        otherFigure.setLightening(hasLightening());
+        otherFigure.setDarkening(hasDarkening());
+        otherFigure.setHMirroring(hasHMirroring());
+        otherFigure.setVMirroring(hasVMirroring());
+        otherFigure.setBorderType(getBorderType()); // NUEVO
 
     }
 }
