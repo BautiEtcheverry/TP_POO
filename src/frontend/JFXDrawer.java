@@ -31,15 +31,15 @@ public class JFXDrawer implements Drawers{
 
     @Override
     public void drawEllipse(Ellipse ellipse){
-        applyStrokeStyle(ellipse.getBorderType(), ellipse.isSelected());
-        gc.setFill(toColor(ellipse.getfillColor()));
+        applyStrokeStyle(ellipse.getFormat().getBorderType(), ellipse.getFormat().isSelected());
+        gc.setFill(toColor(ellipse.getFormat().getFillColor()));
         paintE(ellipse.getCenterPoint(),ellipse.getsMayorAxis(),ellipse.getsMinorAxis());
 
-        if(ellipse.hasLightening()) {
+        if(ellipse.getFormat().hasLightening()) {
             gc.setFill(CLARIFICATION);
             paintE(ellipse.getCenterPoint(),ellipse.getsMayorAxis(),ellipse.getsMinorAxis());
         }
-        if(ellipse.hasDarkening()) {
+        if(ellipse.getFormat().hasDarkening()) {
             gc.setFill(DARKENING);
             paintE(ellipse.getCenterPoint(),ellipse.getsMayorAxis(),ellipse.getsMinorAxis());
         }
@@ -50,15 +50,15 @@ public class JFXDrawer implements Drawers{
 
     @Override
     public void drawRectangle(Rectangle rectangle){
-        applyStrokeStyle(rectangle.getBorderType(), rectangle.isSelected());
-        gc.setFill(toColor(rectangle.getfillColor()));
+        applyStrokeStyle(rectangle.getFormat().getBorderType(), rectangle.getFormat().isSelected());
+        gc.setFill(toColor(rectangle.getFormat().getFillColor()));
         paintR(rectangle.getTopLeft(),rectangle.getBottomRight());
 
-        if(rectangle.hasLightening()) {
+        if(rectangle.getFormat().hasLightening()) {
             gc.setFill(CLARIFICATION);
             paintR(rectangle.getTopLeft(),rectangle.getBottomRight());
         }
-        if(rectangle.hasDarkening()) {
+        if(rectangle.getFormat().hasDarkening()) {
             gc.setFill(DARKENING);
             paintR(rectangle.getTopLeft(),rectangle.getBottomRight());
         }
@@ -67,11 +67,11 @@ public class JFXDrawer implements Drawers{
     }
 
     private void mirrorDrawer(Figure figure){
-        gc.setFill(toColor(figure.getfillColor()));
-        if(figure.hasVMirroring()){
+        gc.setFill(toColor(figure.getFormat().getFillColor()));
+        if(figure.getFormat().hasVMirroring()){
             figure.drawVerticalMirror(figure);
         }
-        if(figure.hasHMirroring()){
+        if(figure.getFormat().hasHMirroring()){
             figure.drawHorizontalMirror(figure);
         }
     }
@@ -100,7 +100,7 @@ public class JFXDrawer implements Drawers{
 
     public void drawHorizontalMirrorEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis){
         double mirroredY = centerPoint.getY() + sMinorAxis;
-        Point mirroredCenter = new Point(centerPoint.getX(), mirroredY);`
+        Point mirroredCenter = new Point(centerPoint.getX(), mirroredY);
         paintE(mirroredCenter, sMayorAxis, sMinorAxis);
     }
 
