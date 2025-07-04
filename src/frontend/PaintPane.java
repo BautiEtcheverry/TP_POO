@@ -74,7 +74,9 @@ public class PaintPane extends BorderPane {
 
 		ComboBox<BorderType> borderSelector = new ComboBox<>();
 		borderSelector.getItems().addAll(BorderType.values());
-		borderSelector.setValue(BorderType.NORMAL); // valor inicial
+		//borderSelector.setPrefWidth(90);
+
+		borderSelector.setValue(BorderType.PUNTEADO_FINO); // valor inicial
 		buttonsBox.getChildren().add(borderSelector);
 
 		fillColorPicker.setOnAction(event -> {
@@ -161,7 +163,7 @@ public class PaintPane extends BorderPane {
 
 		pasteFormat.setOnAction(action -> {
 			if (selectedFigure == null || !formater.hasFormat()) {
-				statusPane.updateStatus("No hay figura seleccionada para pegar formato.");
+				statusPane.updateStatus("No es posible pegar formato.");
 			} else {
 				formater.paste(selectedFigure);
 				statusPane.updateStatus("Formato pegado.");
