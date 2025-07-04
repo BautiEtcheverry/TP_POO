@@ -4,6 +4,7 @@ import backend.CanvasState;
 import backend.Drawers;
 import backend.model.*;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -19,7 +20,7 @@ import javafx.scene.control.Label;
 public class PaintPane extends BorderPane {
 	// BackEnd
 	private final CanvasState canvasState;
-	private FigureFormat lastFormat;//Ultimo formato que se le copio a una figura.
+	private final Formater formater= new Formater();
 	// Canvas y relacionados
 	private final Canvas canvas = new Canvas(800, 600);
 	private final GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -59,19 +60,37 @@ public class PaintPane extends BorderPane {
 		ToggleButton[] toolsArr = {selectionButton, rectangleButton, squareButton, circleButton, ellipseButton, deleteButton};
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : toolsArr) {
-			tool.setMinWidth(90);
+			tool.setPrefWidth(90);
 			tool.setToggleGroup(tools);
 			tool.setCursor(Cursor.HAND);
 		}
 		VBox buttonsBox = new VBox(10);
+		buttonsBox.setPadding(new Insets(5));
+		buttonsBox.setAlignment(Pos.CENTER);
+		buttonsBox.setStyle("-fx-background-color: #999");
+		buttonsBox.setPrefWidth(100);
 		buttonsBox.getChildren().addAll(toolsArr);
+		buttonsBox.getChildren().add(fillColorPicker);
 
 		ComboBox<BorderType> borderSelector = new ComboBox<>();
 		borderSelector.getItems().addAll(BorderType.values());
 		borderSelector.setValue(BorderType.NORMAL); // valor inicial
 		buttonsBox.getChildren().add(borderSelector);
+
+		fillColorPicker.setOnAction(event -> {
+			if (selectedFigure != null) {
+				Color color = fillColorPicker.getValue();
+				selectedFigure.getFormat().setFillColor(color.getRed(), color.getGreen(), color.getBlue(), color.getOpacity());
+				redrawCanvas();
+			}
+		});
+
+		Label operations = new Label("Operaciones:");
+		operations.setStyle(" -fx-font-size: 14;");
+		buttonsBox.getChildren().add(operations);
+
 		Button divideButtonH = new Button("Divide H");
-		divideButtonH.setMinWidth(90);
+		divideButtonH.setPrefWidth(90);
 		divideButtonH.setOnAction(e -> {
 			if (selectedFigure == null) {
 				statusPane.updateStatus("No hay figura seleccionada");
@@ -88,7 +107,7 @@ public class PaintPane extends BorderPane {
 		buttonsBox.getChildren().add(divideButtonH);
 
 		Button divideButtonV = new Button("Divide V");
-		divideButtonV.setMinWidth(90);
+		divideButtonV.setPrefWidth(90);
 		divideButtonV.setOnAction(e -> {
 			if (selectedFigure == null) {
 				statusPane.updateStatus("No hay figura seleccionada");
@@ -105,7 +124,7 @@ public class PaintPane extends BorderPane {
 		buttonsBox.getChildren().add(divideButtonV);
 
 		Button multiplyButton = new Button("Multiply.");
-		multiplyButton.setMinWidth(90);
+		multiplyButton.setPrefWidth(90);
 		multiplyButton.setOnAction(event-> {
 			if (selectedFigure == null) {
 				statusPane.updateStatus("No hay figura seleccionada");
@@ -121,16 +140,36 @@ public class PaintPane extends BorderPane {
 		buttonsBox.getChildren().add(multiplyButton);
 
 		Button moveButton = new Button("Trasladar");
-		moveButton.setMinWidth(90);
+		moveButton.setPrefWidth(90);
 		moveButton.setOnAction(event -> MoveFigure.show(selectedFigure, this::redrawCanvas));
 		buttonsBox.getChildren().add(moveButton);
 
+		Button cpyFormat = new Button("Copiar fmt.");
+		cpyFormat.setPrefWidth(90);
+		cpyFormat.setOnAction(action -> {
+			if (selectedFigure == null) {
+				statusPane.updateStatus("No hay figura seleccionada para copiar formato.");
+			} else {
+				formater.copy(selectedFigure);
+				statusPane.updateStatus("Formato copiado.");
+			}
+		});
+		buttonsBox.getChildren().add(cpyFormat);
 
+		Button pasteFormat = new Button("Pegar fmt.");
+		pasteFormat.setPrefWidth(90);
 
-		buttonsBox.getChildren().add(fillColorPicker);
-		buttonsBox.setPadding(new Insets(5));
-		buttonsBox.setStyle("-fx-background-color: #999");
-		buttonsBox.setPrefWidth(100);
+		pasteFormat.setOnAction(action -> {
+			if (selectedFigure == null || !formater.hasFormat()) {
+				statusPane.updateStatus("No hay figura seleccionada para pegar formato.");
+			} else {
+				formater.paste(selectedFigure);
+				statusPane.updateStatus("Formato pegado.");
+				redrawCanvas();
+			}
+		});
+		buttonsBox.getChildren().add(pasteFormat);
+
 
 		HBox effectBar = new HBox(10);
 		effectBar.getChildren().addAll(new Label("Efectos:"), lighteningCheckBox, darkeningCheckBox, hMirroringCheckBox, vMirroringCheckBox);
@@ -142,14 +181,6 @@ public class PaintPane extends BorderPane {
 		borderSelector.setOnAction(e -> {
 			if (selectedFigure != null) {
 				selectedFigure.getFormat().setBorderType(borderSelector.getValue());
-				redrawCanvas();
-			}
-		});
-
-		fillColorPicker.setOnAction(event -> {
-			if (selectedFigure != null) {
-				Color color = fillColorPicker.getValue();
-				selectedFigure.getFormat().setFillColor(color.getRed(), color.getGreen(), color.getBlue(), color.getOpacity());
 				redrawCanvas();
 			}
 		});

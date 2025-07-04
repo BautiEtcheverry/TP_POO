@@ -55,6 +55,7 @@ public class FigureFormat {
         selected = state;
     }
     public void setFormat(FigureFormat otherFigure){
+        otherFigure.setFillColorRGB(getFillColor());
         otherFigure.setLightening(hasLightening());
         otherFigure.setDarkening(hasDarkening());
         otherFigure.setHMirroring(hasHMirroring());
