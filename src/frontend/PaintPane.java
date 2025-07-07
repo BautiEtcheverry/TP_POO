@@ -176,6 +176,7 @@ public class PaintPane extends BorderPane {
 		HBox effectBar = new HBox(10);
 		effectBar.getChildren().addAll(new Label("Efectos:"), lighteningCheckBox, darkeningCheckBox, hMirroringCheckBox, vMirroringCheckBox);
 		effectBar.setPadding(new Insets(5));
+		effectBar.setAlignment(Pos.CENTER);
 		effectBar.setStyle("-fx-background-color: #999;");
 		setTop(effectBar);
 
