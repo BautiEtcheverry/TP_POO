@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class DivideFigureVertical {
-    public static void show(Figure figure, Consumer<List<Figure>> clonesCons){
+public class DivideFigure {
+    public static void show(boolean vertical, Figure figure, Consumer<List<Figure>> clonesCons){
         Stage pop = new Stage();
         pop.initModality(Modality.APPLICATION_MODAL);
-        pop.setTitle("Divide Vertically");
+        pop.setTitle(vertical ? "Divide Vertically" : "Divide Horizontally");
 
         Label label = new Label("Ingrese N:");
         TextField input = new TextField();
@@ -35,7 +35,7 @@ public class DivideFigureVertical {
                 List<Figure> dividesV = new ArrayList<>();
 
                 for (int i = 0; i< n; i++) {
-                    dividesV.add(figure.divideVertical(n,i));
+                    dividesV.add(vertical?figure.divideVertical(n,i):figure.divideHorizontal(n,i));
                 }
 
                 clonesCons.accept(dividesV);
