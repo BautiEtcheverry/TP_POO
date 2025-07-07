@@ -16,8 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
-import java.util.concurrent.StructureViolationException;
-
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
@@ -125,7 +123,7 @@ public class PaintPane extends BorderPane {
 				statusPane.updateStatus("No hay figura seleccionada");
 				return;
 			}
-			DivideFigure.show(true, selectedFigure, dividesV ->{
+			DivideFigure.show(true,selectedFigure, dividesV ->{
 				for(Figure figure : dividesV){
 					canvasState.addFigure(figure);
 				}
