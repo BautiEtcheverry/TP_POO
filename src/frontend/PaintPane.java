@@ -157,23 +157,23 @@ public class PaintPane extends BorderPane {
 		// ---------Fin panel derecho---------
 
 		Button cpyFormat = new Button("Copiar fmt.");
+		Button pasteFormat = new Button("Pegar fmt.");
 		cpyFormat.setPrefWidth(90);
 		cpyFormat.setOnAction(action -> {
 			if (selectedFigure == null) {
 				statusPane.updateStatus("No hay figura seleccionada para copiar formato.");
 			} else {
 				formater.copy(selectedFigure);
+				pasteFormat.setDisable(false);
 				statusPane.updateStatus("Formato copiado.");
 			}
 		});
 		buttonsBox.getChildren().add(cpyFormat);
 
-		Button pasteFormat = new Button("Pegar fmt.");
-		pasteFormat.setDisable(!formater.hasFormat());
+		pasteFormat.setDisable(true);
 		pasteFormat.setPrefWidth(90);
-
 		pasteFormat.setOnAction(action -> {
-			if (selectedFigure == null || !formater.hasFormat()) {
+			if (selectedFigure == null || formater.hasFormat()) {
 				statusPane.updateStatus("No es posible pegar formato.");
 			} else {
 				formater.paste(selectedFigure);
@@ -359,6 +359,7 @@ public class PaintPane extends BorderPane {
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		gc.setLineWidth(10);
+
 
 		for (Figure figure : canvasState.figures()) {
 			if(figure==selectedFigure){
