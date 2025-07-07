@@ -99,7 +99,7 @@ public class PaintPane extends BorderPane {
 		operations.setStyle(" -fx-font-size: 14;");
 		rightPanel.getChildren().add(operations);
 
-		Button divideButtonH = new Button("Divide H");
+		Button divideButtonH = new Button("Dividir An.");
 		divideButtonH.setPrefWidth(90);
 		divideButtonH.setOnAction(e -> {
 			if (selectedFigure == null) {
@@ -116,7 +116,7 @@ public class PaintPane extends BorderPane {
 		});
 		rightPanel.getChildren().add(divideButtonH);
 
-		Button divideButtonV = new Button("Divide V");
+		Button divideButtonV = new Button("Dividir Al.");
 		divideButtonV.setPrefWidth(90);
 		divideButtonV.setOnAction(e -> {
 			if (selectedFigure == null) {
@@ -351,7 +351,6 @@ public class PaintPane extends BorderPane {
 			}
 			redrawCanvas();
 		});
-
 		setLeft(buttonsBox);
 		setCenter(canvas);
 	}
