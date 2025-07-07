@@ -16,6 +16,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 
 public class PaintPane extends BorderPane {
 	// BackEnd
@@ -130,7 +133,7 @@ public class PaintPane extends BorderPane {
 		});
 		rightPanel.getChildren().add(divideButtonV);
 
-		Button multiplyButton = new Button("Multiply.");
+		Button multiplyButton = new Button("Multiplicar");
 		multiplyButton.setPrefWidth(90);
 		multiplyButton.setOnAction(event-> {
 			if (selectedFigure == null) {
@@ -151,6 +154,8 @@ public class PaintPane extends BorderPane {
 		moveButton.setOnAction(event -> MoveFigure.show(selectedFigure, this::redrawCanvas));
 		rightPanel.getChildren().add(moveButton);
 
+		// ---------Fin panel derecho---------
+
 		Button cpyFormat = new Button("Copiar fmt.");
 		cpyFormat.setPrefWidth(90);
 		cpyFormat.setOnAction(action -> {
@@ -161,10 +166,10 @@ public class PaintPane extends BorderPane {
 				statusPane.updateStatus("Formato copiado.");
 			}
 		});
-		rightPanel.getChildren().add(cpyFormat);
-		// ---------Fin panel derecho---------
+		buttonsBox.getChildren().add(cpyFormat);
 
 		Button pasteFormat = new Button("Pegar fmt.");
+		pasteFormat.setDisable(!formater.hasFormat());
 		pasteFormat.setPrefWidth(90);
 
 		pasteFormat.setOnAction(action -> {
