@@ -65,8 +65,9 @@ public class PaintPane extends BorderPane {
 			tool.setCursor(Cursor.HAND);
 		}
 		VBox buttonsBox = new VBox(10);
+		this.setLeft(buttonsBox);
 		buttonsBox.setPadding(new Insets(5));
-		buttonsBox.setAlignment(Pos.CENTER);
+		buttonsBox.setAlignment(Pos.TOP_CENTER);
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
 		buttonsBox.getChildren().addAll(toolsArr);
@@ -86,10 +87,14 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			}
 		});
-
+		// ---------Panel Derecho---------
+		VBox rightPanel = new VBox(10);
+		rightPanel.setStyle("-fx-background-color: #999");
+		rightPanel.setPadding(new Insets(10));
+		this.setRight(rightPanel);
 		Label operations = new Label("Operaciones:");
 		operations.setStyle(" -fx-font-size: 14;");
-		buttonsBox.getChildren().add(operations);
+		rightPanel.getChildren().add(operations);
 
 		Button divideButtonH = new Button("Divide H");
 		divideButtonH.setPrefWidth(90);
@@ -106,7 +111,7 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			});
 		});
-		buttonsBox.getChildren().add(divideButtonH);
+		rightPanel.getChildren().add(divideButtonH);
 
 		Button divideButtonV = new Button("Divide V");
 		divideButtonV.setPrefWidth(90);
@@ -123,7 +128,7 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			});
 		});
-		buttonsBox.getChildren().add(divideButtonV);
+		rightPanel.getChildren().add(divideButtonV);
 
 		Button multiplyButton = new Button("Multiply.");
 		multiplyButton.setPrefWidth(90);
@@ -139,12 +144,12 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			});
 		});
-		buttonsBox.getChildren().add(multiplyButton);
+		rightPanel.getChildren().add(multiplyButton);
 
 		Button moveButton = new Button("Trasladar");
 		moveButton.setPrefWidth(90);
 		moveButton.setOnAction(event -> MoveFigure.show(selectedFigure, this::redrawCanvas));
-		buttonsBox.getChildren().add(moveButton);
+		rightPanel.getChildren().add(moveButton);
 
 		Button cpyFormat = new Button("Copiar fmt.");
 		cpyFormat.setPrefWidth(90);
@@ -156,7 +161,8 @@ public class PaintPane extends BorderPane {
 				statusPane.updateStatus("Formato copiado.");
 			}
 		});
-		buttonsBox.getChildren().add(cpyFormat);
+		rightPanel.getChildren().add(cpyFormat);
+		// ---------Fin panel derecho---------
 
 		Button pasteFormat = new Button("Pegar fmt.");
 		pasteFormat.setPrefWidth(90);
@@ -342,7 +348,7 @@ public class PaintPane extends BorderPane {
 		});
 
 		setLeft(buttonsBox);
-		setRight(canvas);
+		setCenter(canvas);
 	}
 
 	void redrawCanvas() {
