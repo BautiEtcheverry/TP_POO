@@ -15,10 +15,11 @@ import java.util.function.Consumer;
 
 public class DivideFigureHorizontal {
 
-    public static void show(Figure figure, Consumer<List<Figure>> clonesCons){
+    public static void show( Boolean vertical, Figure figure, Consumer<List<Figure>> clonesCons){
         Stage pop = new Stage();
         pop.initModality(Modality.APPLICATION_MODAL);
-        pop.setTitle("Divide Horizontally");
+        pop.setTitle(vertical ? "Divide Vertically" : "Divide Horizontally");
+
 
         Label label = new Label("Ingrese N:");
         TextField input = new TextField();
