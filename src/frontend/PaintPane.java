@@ -76,7 +76,7 @@ public class PaintPane extends BorderPane {
 		borderSelector.getItems().addAll(BorderType.values());
 		//borderSelector.setPrefWidth(90);
 
-		borderSelector.setValue(BorderType.PUNTEADO_FINO); // valor inicial
+		borderSelector.setValue(BorderType.NORMAL); // valor inicial
 		buttonsBox.getChildren().add(borderSelector);
 
 		fillColorPicker.setOnAction(event -> {
