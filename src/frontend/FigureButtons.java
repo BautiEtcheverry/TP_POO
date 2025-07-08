@@ -6,13 +6,10 @@ import backend.model.FigureBuilders.CircleBuilder;
 import backend.model.FigureBuilders.EllipseBuilder;
 import backend.model.FigureBuilders.RectangleBuilder;
 import backend.model.FigureBuilders.SquareBuilder;
-import com.sun.javafx.reflect.FieldUtil;
 import javafx.scene.Cursor;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-
-import java.lang.reflect.AnnotatedTypeVariable;
 import java.util.Map;
 
 public class FigureButtons {
