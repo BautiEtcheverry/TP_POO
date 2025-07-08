@@ -23,7 +23,7 @@ public class FigureButtons {
     private Runnable onDeleteAction;
     private Figure selectedFigure;
     private final Map<ToggleButton, FigureBuilder> figureBuilderMap;
-    private final ToggleButton[] toolsArr = {rectangleButton, squareButton, circleButton, ellipseButton};
+    private final ToggleButton[] toolsArr = {selectionButton,rectangleButton, squareButton, circleButton, ellipseButton,deleteButton};
 
     public FigureButtons(){
         for (ToggleButton tool : toolsArr) {
@@ -50,7 +50,6 @@ public class FigureButtons {
     }
 
     public ToggleButton getSelectionButton(){return this.selectionButton;}
-    public ToggleButton getDeleteButton(){return this.deleteButton;}
 
     public void setOnDeleteAction(Runnable action) {
         this.onDeleteAction = action;

@@ -41,7 +41,7 @@ public class PaintPane extends BorderPane {
 	private Figure selectedFigure;
 
 	//Clase para dibujar figuras
-	private final Drawers drawer = new JFXDrawer(gc, fillColorPicker);
+	private final Drawers drawer = new JFXDrawer(gc);
 
 	// StatusBar
 	private final StatusPane statusPane;
@@ -58,9 +58,8 @@ public class PaintPane extends BorderPane {
 		buttonsBox.setAlignment(Pos.TOP_CENTER);
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
-		buttonsBox.getChildren().add(figuresBtm.getSelectionButton());
+		//buttonsBox.getChildren().add(figuresBtm.getSelectionButton());
 		buttonsBox.getChildren().addAll(figuresBtm.getBottomArr());
-		buttonsBox.getChildren().add(figuresBtm.getDeleteButton());
 		buttonsBox.getChildren().add(fillColorPicker);
 
 

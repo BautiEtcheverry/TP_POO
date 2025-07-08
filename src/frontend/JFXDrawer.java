@@ -6,15 +6,13 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.paint.Color;
 
 public class JFXDrawer implements Drawers{
-    private GraphicsContext gc;
-    private final ColorPicker fillColorPicker;
+    private final GraphicsContext gc;
     private static final Color CLARIFICATION = Color.rgb(255, 255, 255, 0.7);
     private static final Color DARKENING = Color.rgb(0, 0, 0, 0.7);
 
 
-    public JFXDrawer(GraphicsContext gc, ColorPicker fillColorPicker){
+    public JFXDrawer(GraphicsContext gc){
         this.gc=gc;
-        this.fillColorPicker=fillColorPicker;
     }
 
     private void paintEllipseFill(Point centerPoint, double sMayorAxis, double sMinorAxis) {
