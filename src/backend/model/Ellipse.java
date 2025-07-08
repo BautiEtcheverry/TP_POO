@@ -48,7 +48,7 @@ public class Ellipse extends Figure {
     }
     @Override
     public Figure clone(double offsetX, double offsetY){
-        Ellipse newFigure = new Ellipse(new Point(centerPoint.getX()+offsetX, centerPoint.getY()+offsetY), sMayorAxis,sMinorAxis, getFormat().getFillColor());
+        Ellipse newFigure = new Ellipse(new Point(centerPoint.getX()+offsetX, centerPoint.getY()+offsetY), sMayorAxis,sMinorAxis, getFormat().getFillColor(),getDrawer());
         setProperties(newFigure);
         return newFigure;
     }
@@ -59,7 +59,7 @@ public class Ellipse extends Figure {
         double newSMinorAxis = sMinorAxis/N;
         double newCenterX = centerPoint.getX() - sMayorAxis/2 + (newSMayorAxis/2);
         Point newCenterPoint = new Point(newCenterX + newSMayorAxis * times ,newCenterY);
-        Ellipse newFigure = new Ellipse(newCenterPoint,newSMayorAxis, newSMinorAxis, getFormat().getFillColor());
+        Ellipse newFigure = new Ellipse(newCenterPoint,newSMayorAxis, newSMinorAxis, getFormat().getFillColor(),getDrawer());
         setProperties(newFigure);
         return newFigure;
     }
@@ -71,7 +71,7 @@ public class Ellipse extends Figure {
         double startY = centerPoint.getY() - sMinorAxis/2 + newSMinorAxis/2 ;
         double newCenterY= startY + newSMinorAxis * times;
         Point newCenterPoint = new Point(newCenterX,newCenterY);
-        Ellipse newFigure = new Ellipse(newCenterPoint,newSMayorAxis, newSMinorAxis, getFormat().getFillColor());
+        Ellipse newFigure = new Ellipse(newCenterPoint,newSMayorAxis, newSMinorAxis, getFormat().getFillColor(),getDrawer());
         setProperties(newFigure);
         return newFigure;
     };

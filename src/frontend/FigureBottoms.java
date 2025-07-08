@@ -1,25 +1,32 @@
 package frontend;
 
+import backend.model.Figure;
+import  backend.model.FigureBuilders.FigureBuilder;
+import backend.model.FigureBuilders.CircleBuilder;
+import backend.model.FigureBuilders.EllipseBuilder;
+import backend.model.FigureBuilders.RectangleBuilder;
+import backend.model.FigureBuilders.SquareBuilder;
+import backend.model.Square;
 import javafx.scene.Cursor;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 
+import javax.swing.plaf.basic.BasicBorders;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FigureBottoms {
-    private final ToggleButton deleteButton = new ToggleButton("Borrar");
-    private final ToggleButton selectionButton = new ToggleButton("Seleccionar");
     private final ToggleButton rectangleButton = new ToggleButton("Rectángulo");
     private final ToggleButton squareButton = new ToggleButton("Cuadrado");
     private final ToggleButton circleButton = new ToggleButton("Círculo");
     private final ToggleButton ellipseButton = new ToggleButton("Elipse");
     private final ToggleGroup tools = new ToggleGroup();
-    private final Map<ToggleButton, FigureBuilder> figureBuilderMap = new HashMap<>();
-    public FigureBottoms(){
-        ToggleButton[] toolsArr = {selectionButton, rectangleButton, squareButton, circleButton, ellipseButton, deleteButton};
-        ToggleGroup tools = new ToggleGroup();
+    private Map<ToggleButton, FigureBuilder> figureBuilderMap;
+    private ToggleButton[] toolsArr = {rectangleButton, squareButton, circleButton, ellipseButton};
 
+    public FigureBottoms(){
         for (ToggleButton tool : toolsArr) {
             tool.setPrefWidth(90);
             tool.setToggleGroup(tools);
@@ -27,17 +34,26 @@ public class FigureBottoms {
         }
 
         figureBuilderMap = Map.of(
-                rectangleButton = ne
-        )
+                rectangleButton , new RectangleBuilder(),
+                squareButton, new SquareBuilder(),
+                ellipseButton ,new EllipseBuilder(),
+                circleButton, new CircleBuilder()
+        );
 
+    }
 
-
+    public FigureBuilder getBuilder(){
+        Toggle bottomSelected = tools.getSelectedToggle();
+        if(!(bottomSelected instanceof ToggleButton)){
+            return null;
+        }
+        return figureBuilderMap.get(bottomSelected);
     }
 
 
 
-    public ToggleGroup getBottomGroup(){
-        return tools;
+    public ToggleButton[] getBottomGroup(){
+        return this.toolsArr;
     }
 
 }

@@ -51,7 +51,7 @@ public class Rectangle extends Figure {
         Rectangle newFigure = new Rectangle(
                 new Point(topLeft.getX()+offsetX, topLeft.getY()+offsetY),
                 new Point(bottomRight.getX()+offsetX, bottomRight.getY()+offsetY),
-                getFormat().getFillColor());
+                getFormat().getFillColor(),getDrawer());
         setProperties(newFigure);
         return newFigure;
     }
@@ -66,7 +66,7 @@ public class Rectangle extends Figure {
         double YCoordinateBR = middle + height/2;
         Point newCoordinateTopLeft = new Point( startX,YCoordinateTL);
         Point newCoordinateBottomRight = new Point(startX + length, YCoordinateBR);
-        Rectangle newFigure = new Rectangle(newCoordinateTopLeft,newCoordinateBottomRight, getFormat().getFillColor());
+        Rectangle newFigure = new Rectangle(newCoordinateTopLeft,newCoordinateBottomRight, getFormat().getFillColor(),getDrawer());
         setProperties(newFigure);
         return  newFigure;
     }
@@ -80,7 +80,7 @@ public class Rectangle extends Figure {
         double XCoordinateBR = middle + length/2;
         Point newCoordinateTopLeft = new Point( XCoordinateTL, startY - height );
         Point newCoordinateBottomRight = new Point(XCoordinateBR, startY);
-        Rectangle newFigure = new Rectangle(newCoordinateTopLeft,newCoordinateBottomRight, getFormat().getFillColor());
+        Rectangle newFigure = new Rectangle(newCoordinateTopLeft,newCoordinateBottomRight, getFormat().getFillColor(),getDrawer());
         setProperties(newFigure);
         return newFigure;
     }
