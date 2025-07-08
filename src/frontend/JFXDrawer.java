@@ -17,53 +17,86 @@ public class JFXDrawer implements Drawers{
         this.fillColorPicker=fillColorPicker;
     }
 
-    private void paintE(Point centerPoint, double sMayorAxis, double sMinorAxis){
-        gc.strokeOval(centerPoint.getX() - (sMayorAxis / 2), centerPoint.getY() - (sMinorAxis / 2), sMayorAxis, sMinorAxis);
+    private void paintEllipseFill(Point centerPoint, double sMayorAxis, double sMinorAxis) {
         gc.fillOval(centerPoint.getX() - (sMayorAxis / 2), centerPoint.getY() - (sMinorAxis / 2), sMayorAxis, sMinorAxis);
     }
 
-    private void paintR(Point topLeft, Point bottomRight){
-        gc.strokeRect(topLeft.getX(), topLeft.getY(),
-                Math.abs(topLeft.getX() - bottomRight.getX()), Math.abs(topLeft.getY() - bottomRight.getY()));
+    private void paintEllipseStroke(Point centerPoint, double sMayorAxis, double sMinorAxis) {
+        gc.strokeOval(centerPoint.getX() - (sMayorAxis / 2), centerPoint.getY() - (sMinorAxis / 2), sMayorAxis, sMinorAxis);
+    }
+
+    private void paintRectangleFill(Point topLeft, Point bottomRight) {
         gc.fillRect(topLeft.getX(), topLeft.getY(),
                 Math.abs(topLeft.getX() - bottomRight.getX()), Math.abs(topLeft.getY() - bottomRight.getY()));
     }
 
+    private void paintRectangleStroke(Point topLeft, Point bottomRight) {
+        gc.strokeRect(topLeft.getX(), topLeft.getY(),
+                Math.abs(topLeft.getX() - bottomRight.getX()), Math.abs(topLeft.getY() - bottomRight.getY()));
+    }
+
+
     @Override
     public void drawEllipse(Ellipse ellipse){
-        applyStrokeStyle(ellipse.getFormat().getBorderType(), ellipse.getFormat().isSelected());
+        // Guardar el estilo del borde
+        BorderType borderType = ellipse.getFormat().getBorderType();
+        boolean isSelected = ellipse.getFormat().isSelected();
+
+        // Dibujar todos los rellenos primero
         gc.setFill(toColor(ellipse.getFormat().getFillColor()));
-        paintE(ellipse.getCenterPoint(),ellipse.getsMayorAxis(),ellipse.getsMinorAxis());
+        paintEllipseFill(ellipse.getCenterPoint(), ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
 
         if(ellipse.getFormat().hasLightening()) {
             gc.setFill(CLARIFICATION);
-            paintE(ellipse.getCenterPoint(),ellipse.getsMayorAxis(),ellipse.getsMinorAxis());
+            paintEllipseFill(ellipse.getCenterPoint(), ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
         }
         if(ellipse.getFormat().hasDarkening()) {
             gc.setFill(DARKENING);
-            paintE(ellipse.getCenterPoint(),ellipse.getsMayorAxis(),ellipse.getsMinorAxis());
+            paintEllipseFill(ellipse.getCenterPoint(), ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
+        }
+        // Dibujar los reflejos (solo rellenos)
+        if(ellipse.getFormat().hasVMirroring() || ellipse.getFormat().hasHMirroring()) {
+            gc.setFill(toColor(ellipse.getFormat().getFillColor()));
+            mirrorDrawer(ellipse);
         }
 
-        mirrorDrawer(ellipse);
+        // Finalmente, dibujar el borde de la figura original
+        applyStrokeStyle(borderType, isSelected);
+        paintEllipseStroke(ellipse.getCenterPoint(), ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
+
     }
 
 
     @Override
     public void drawRectangle(Rectangle rectangle){
-        applyStrokeStyle(rectangle.getFormat().getBorderType(), rectangle.getFormat().isSelected());
+        // Guardar el estilo del borde
+        BorderType borderType = rectangle.getFormat().getBorderType();
+        boolean isSelected = rectangle.getFormat().isSelected();
+
+        // Dibujar todos los rellenos primero
         gc.setFill(toColor(rectangle.getFormat().getFillColor()));
-        paintR(rectangle.getTopLeft(),rectangle.getBottomRight());
+        paintRectangleFill(rectangle.getTopLeft(), rectangle.getBottomRight());
+
 
         if(rectangle.getFormat().hasLightening()) {
             gc.setFill(CLARIFICATION);
-            paintR(rectangle.getTopLeft(),rectangle.getBottomRight());
+            paintRectangleFill(rectangle.getTopLeft(), rectangle.getBottomRight());
         }
         if(rectangle.getFormat().hasDarkening()) {
             gc.setFill(DARKENING);
-            paintR(rectangle.getTopLeft(),rectangle.getBottomRight());
+            paintRectangleFill(rectangle.getTopLeft(), rectangle.getBottomRight());
         }
 
-        mirrorDrawer(rectangle);
+        // Dibujar los reflejos (solo rellenos)
+        if(rectangle.getFormat().hasVMirroring() || rectangle.getFormat().hasHMirroring()) {
+            gc.setFill(toColor(rectangle.getFormat().getFillColor()));
+            mirrorDrawer(rectangle);
+        }
+
+        // Finalmente, dibujar el borde de la figura original
+        applyStrokeStyle(borderType, isSelected);
+        paintRectangleStroke(rectangle.getTopLeft(), rectangle.getBottomRight());
+
     }
 
     private void mirrorDrawer(Figure figure){
@@ -79,7 +112,9 @@ public class JFXDrawer implements Drawers{
     public void drawVerticalMirrorEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis) {
         double mirroredX = centerPoint.getX() + sMayorAxis;
         Point mirroredCenter = new Point(mirroredX, centerPoint.getY());
-        paintE(mirroredCenter, sMayorAxis, sMinorAxis);
+        paintEllipseFill(mirroredCenter, sMayorAxis, sMinorAxis);
+        applyStrokeStyle(BorderType.NORMAL, false);
+        paintEllipseStroke(mirroredCenter, sMayorAxis , sMinorAxis);
     }
 
     public void drawVerticalMirrorRectangle(Point topLeft, Point bottomRight) {
@@ -87,7 +122,10 @@ public class JFXDrawer implements Drawers{
         double newTopLeftX = bottomRight.getX();
         Point newTopLeft = new Point(newTopLeftX, topLeft.getY());
         Point newBottomRight = new Point(newTopLeftX + width, bottomRight.getY());
-        paintR(newTopLeft,newBottomRight);
+        paintRectangleFill(newTopLeft,newBottomRight);
+        applyStrokeStyle(BorderType.NORMAL, false);
+        paintRectangleStroke(newTopLeft, newBottomRight);
+
     }
 
     public void drawHorizontalMirrorRectangle(Point topLeft, Point bottomRight){
@@ -95,13 +133,18 @@ public class JFXDrawer implements Drawers{
         double newTopLeftY = topLeft.getY() + height;
         Point newBottomRight = new Point(bottomRight.getX(),topLeft.getY());
         Point newTopLeft = new Point(topLeft.getX(),newTopLeftY);
-        paintR(newTopLeft,newBottomRight);
+        paintRectangleFill(newTopLeft, newBottomRight);
+        applyStrokeStyle(BorderType.NORMAL, false);
+        paintRectangleStroke(newTopLeft, newBottomRight);
     }
 
     public void drawHorizontalMirrorEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis){
         double mirroredY = centerPoint.getY() + sMinorAxis;
         Point mirroredCenter = new Point(centerPoint.getX(), mirroredY);
-        paintE(mirroredCenter, sMayorAxis, sMinorAxis);
+        paintEllipseFill(mirroredCenter, sMayorAxis, sMinorAxis);
+        applyStrokeStyle(BorderType.NORMAL, false);
+        paintEllipseStroke(mirroredCenter, sMayorAxis, sMinorAxis);
+
     }
 
     private void applyStrokeStyle(BorderType type, boolean selected) {
