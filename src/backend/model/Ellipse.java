@@ -4,8 +4,8 @@ import backend.Drawers;
 
 public class Ellipse extends Figure {
 
-    protected final Point centerPoint;
-    protected final double sMayorAxis, sMinorAxis;
+    private final Point centerPoint;
+    private final double sMayorAxis, sMinorAxis;
 
     public Ellipse(Point centerPoint, double sMayorAxis, double sMinorAxis, RGBColor fillColor, Drawers drawer) {
         this.centerPoint = centerPoint;

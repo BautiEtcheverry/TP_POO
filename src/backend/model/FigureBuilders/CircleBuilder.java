@@ -1,7 +1,10 @@
 package backend.model.FigureBuilders;
 
 import backend.Drawers;
-import backend.model.*;
+import backend.model.Circle;
+import backend.model.Figure;
+import backend.model.Point;
+import backend.model.RGBColor;
 
 public class CircleBuilder implements FigureBuilder {
     @Override

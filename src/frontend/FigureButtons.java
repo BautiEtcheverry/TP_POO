@@ -11,7 +11,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import java.util.Map;
 
-public class FigureBottoms {
+public class FigureButtons {
     private final ToggleButton rectangleButton = new ToggleButton("Rectángulo");
     private final ToggleButton squareButton = new ToggleButton("Cuadrado");
     private final ToggleButton circleButton = new ToggleButton("Círculo");
@@ -20,7 +20,7 @@ public class FigureBottoms {
     private final Map<ToggleButton, FigureBuilder> figureBuilderMap;
     private ToggleButton[] toolsArr = {rectangleButton, squareButton, circleButton, ellipseButton};
 
-    public FigureBottoms(){
+    public FigureButtons(){
         for (ToggleButton tool : toolsArr) {
             tool.setPrefWidth(90);
             tool.setToggleGroup(tools);

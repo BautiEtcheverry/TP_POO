@@ -3,7 +3,6 @@ package frontend;
 import backend.model.Figure;
 import backend.model.FigureFormat;
 
-import static java.lang.Boolean.FALSE;
 
 public class Formater {
     private FigureFormat lastFormat = null;//Ultimo formato que se le copio a una figura.

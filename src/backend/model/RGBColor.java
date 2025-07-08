@@ -1,10 +1,10 @@
 package backend.model;
 
 public class RGBColor {
-    private double red;
-    private double green;
-    private double blue;
-    private double opacity;
+    private final double red;
+    private final double green;
+    private final double blue;
+    private final double opacity;
 
     public RGBColor(double red,double green, double blue, double opacity){
         this.red = red;

@@ -52,7 +52,7 @@ public class PaintPane extends BorderPane {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
 		ToggleButton[] ActionArr = {selectionButton,deleteButton};
-		FigureBottoms figuresBtm = new FigureBottoms();
+		FigureButtons figuresBtm = new FigureButtons();
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : ActionArr) {
 			tool.setPrefWidth(90);
@@ -72,7 +72,6 @@ public class PaintPane extends BorderPane {
 
 		ComboBox<BorderType> borderSelector = new ComboBox<>();
 		borderSelector.getItems().addAll(BorderType.values());
-		//borderSelector.setPrefWidth(90);
 
 		borderSelector.setValue(BorderType.NORMAL); // valor inicial
 		buttonsBox.getChildren().add(borderSelector);
