@@ -1,14 +1,18 @@
 package frontend;
 
+import backend.model.Figure;
 import  backend.model.FigureBuilders.FigureBuilder;
 import backend.model.FigureBuilders.CircleBuilder;
 import backend.model.FigureBuilders.EllipseBuilder;
 import backend.model.FigureBuilders.RectangleBuilder;
 import backend.model.FigureBuilders.SquareBuilder;
+import com.sun.javafx.reflect.FieldUtil;
 import javafx.scene.Cursor;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+
+import java.lang.reflect.AnnotatedTypeVariable;
 import java.util.Map;
 
 public class FigureButtons {
@@ -16,7 +20,11 @@ public class FigureButtons {
     private final ToggleButton squareButton = new ToggleButton("Cuadrado");
     private final ToggleButton circleButton = new ToggleButton("Círculo");
     private final ToggleButton ellipseButton = new ToggleButton("Elipse");
+    private final ToggleButton selectionButton = new ToggleButton("Seleccionar");
+    private final ToggleButton deleteButton = new ToggleButton("Borrar");
     private final ToggleGroup tools = new ToggleGroup();
+    private Runnable onDeleteAction;
+    private Figure selectedFigure;
     private final Map<ToggleButton, FigureBuilder> figureBuilderMap;
     private ToggleButton[] toolsArr = {rectangleButton, squareButton, circleButton, ellipseButton};
 
@@ -33,7 +41,31 @@ public class FigureButtons {
                 ellipseButton ,new EllipseBuilder(),
                 circleButton, new CircleBuilder()
         );
+
+        selectionButton.setToggleGroup(tools);
+        selectionButton.setPrefWidth(90);
+        selectionButton.setCursor(Cursor.HAND);
+        deleteButton.setPrefWidth(90);
+        deleteButton.setCursor(Cursor.HAND);
+        if(selectedFigure != null) {
+            System.out.println("ayuda entro todita");
+            deleteButton.setOnAction(actionEvent -> onDeleteAction.run());
+        }
+
     }
+
+    public ToggleButton getSelectionButton(){return this.selectionButton;}
+    public ToggleButton getDeleteButton(){return this.deleteButton;}
+
+    public void setOnDeleteAction(Figure figure,Runnable action) {
+        this.onDeleteAction = action;
+        if(figure == null){
+            System.out.println("me llego null virgo");
+        }
+        this.selectedFigure = figure;
+    }
+
+    public boolean getSelectionStatus(){return selectionButton.isSelected();}
 
     public FigureBuilder getBuilder(){
         Toggle bottomSelected = tools.getSelectedToggle();
@@ -42,8 +74,10 @@ public class FigureButtons {
         }
         return figureBuilderMap.get(bottomSelected);
     }
-
-    public ToggleButton[] getBottomGroup(){
+    public ToggleGroup getGroup(){
+        return tools;
+    }
+    public ToggleButton[] getBottomArr(){
         return this.toolsArr;
     }
 }

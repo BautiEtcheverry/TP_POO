@@ -26,8 +26,7 @@ public class PaintPane extends BorderPane {
 	private final GraphicsContext gc = canvas.getGraphicsContext2D();
 
 	// Botones Barra Izquierda
-	private final ToggleButton selectionButton = new ToggleButton("Seleccionar");
-	private final ToggleButton deleteButton = new ToggleButton("Borrar");
+
 	private final CheckBox lighteningCheckBox = new CheckBox("Aclaramiento");
 	private final CheckBox darkeningCheckBox = new CheckBox("Oscurecimiento");
 	private final CheckBox hMirroringCheckBox = new CheckBox("Espejo Horizontal");
@@ -51,30 +50,20 @@ public class PaintPane extends BorderPane {
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-		ToggleButton[] ActionArr = {selectionButton,deleteButton};
-
 		//instancio los botones que crean las figuras
-		FigureBottoms figuresBtm = new FigureBottoms();
-
+		FigureButtons figuresBtm = new FigureButtons();
 		ToggleGroup tools = new ToggleGroup();
-		for (ToggleButton tool : ActionArr) {
-			tool.setPrefWidth(90);
-			tool.setToggleGroup(tools);
-			tool.setCursor(Cursor.HAND);
-		}
-
 		VBox buttonsBox = new VBox(10);
 		this.setLeft(buttonsBox);
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setAlignment(Pos.TOP_CENTER);
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
-
-		//se añaden los botones a la toolBar
-		buttonsBox.getChildren().add(selectionButton);
-		buttonsBox.getChildren().addAll(figuresBtm.getBottomGroup());
-		buttonsBox.getChildren().add(deleteButton);
+		buttonsBox.getChildren().add(figuresBtm.getSelectionButton());
+		buttonsBox.getChildren().addAll(figuresBtm.getBottomArr());
+		buttonsBox.getChildren().add(figuresBtm.getDeleteButton());
 		buttonsBox.getChildren().add(fillColorPicker);
+
 
 		ComboBox<BorderType> borderSelector = new ComboBox<>();
 		borderSelector.getItems().addAll(BorderType.values());
@@ -206,7 +195,7 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMouseReleased(event -> {
 			Point endPoint = new Point(event.getX(), event.getY());
-			if (startPoint == null || selectionButton.isSelected()){
+			if (startPoint == null){
 				return;
 			}
 			if (endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
@@ -256,7 +245,7 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseClicked(event -> {
-			if (selectionButton.isSelected()) {
+			if (figuresBtm.getSelectionStatus()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
@@ -294,7 +283,7 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseDragged(event -> {
-			if (selectionButton.isSelected() && selectedFigure != null) {
+			if (figuresBtm.getSelectionStatus() && selectedFigure != null) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 70;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 70;
@@ -303,7 +292,7 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
-		deleteButton.setOnAction(event -> {
+		figuresBtm.setOnDeleteAction(selectedFigure,() -> {
 			if (selectedFigure != null) {
 				canvasState.deleteFigure(selectedFigure);
 				selectedFigure = null;
