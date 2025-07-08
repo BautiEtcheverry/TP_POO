@@ -58,7 +58,6 @@ public class PaintPane extends BorderPane {
 		buttonsBox.setAlignment(Pos.TOP_CENTER);
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
-		//buttonsBox.getChildren().add(figuresBtm.getSelectionButton());
 		buttonsBox.getChildren().addAll(figuresBtm.getBottomArr());
 		buttonsBox.getChildren().add(fillColorPicker);
 
