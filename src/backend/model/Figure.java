@@ -3,13 +3,13 @@ package backend.model;
 import backend.Drawers;
 
 public abstract class Figure {
-    public FigureFormat format = new FigureFormat();
+    private FigureFormat format = new FigureFormat();
 
-    //Instancia de una interfaz que debe de ser implementada por el front para dibujar las figuras.
+    //Instancia de una interfaz que debe de ser implementada para dibujar las figuras.
     private Drawers drawer;
-    public Drawers getDrawer(){return drawer;}
-
-    //ESTO HAY QUE CAMBIARLO
+    public Drawers getDrawer(){
+        return drawer;
+    }
     public void setDrawer(Drawers drawer){
         this.drawer=drawer;
     }
@@ -35,7 +35,5 @@ public abstract class Figure {
     }
     public abstract Figure divideHorizontal(int N, int times);
     public abstract Figure divideVertical(int N, int times);
-
-
 
 }

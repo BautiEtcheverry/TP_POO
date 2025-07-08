@@ -2,9 +2,6 @@ package backend.model;
 
 
 import backend.Drawers;
-import org.w3c.dom.html.HTMLImageElement;
-
-import java.io.FileFilter;
 
 public class Rectangle extends Figure {
 

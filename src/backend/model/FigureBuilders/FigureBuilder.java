@@ -5,6 +5,7 @@ import backend.model.Figure;
 import backend.model.Point;
 import backend.model.RGBColor;
 
+@FunctionalInterface
 public interface FigureBuilder {
     Figure builder(Point startPoint, Point endPoint, RGBColor figureColor, Drawers drawer);
 }

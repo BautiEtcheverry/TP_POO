@@ -51,7 +51,6 @@ public class PaintPane extends BorderPane {
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-
 		ToggleButton[] ActionArr = {selectionButton,deleteButton};
 
 		//instancio los botones que crean las figuras
@@ -214,6 +213,8 @@ public class PaintPane extends BorderPane {
 				return;
 			}
 
+			//-------------------------------------------------------------------------------------
+
 			Color color = fillColorPicker.getValue();
 			RGBColor figureColor = new RGBColor(color.getRed(), color.getGreen(), color.getBlue(), color.getOpacity());
 			FigureBuilder builder = figuresBtm.getBuilder();
@@ -223,6 +224,9 @@ public class PaintPane extends BorderPane {
 			}
 
 			Figure newFigure = builder.builder(startPoint, endPoint,figureColor,drawer);
+
+			// --------------------------------------------------------------------------------------
+
 			newFigure.getFormat().setLightening(lighteningCheckBox.isSelected());
 			newFigure.getFormat().setDarkening(darkeningCheckBox.isSelected());
 			newFigure.getFormat().setHMirroring(hMirroringCheckBox.isSelected());
