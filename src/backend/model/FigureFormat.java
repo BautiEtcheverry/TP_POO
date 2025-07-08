@@ -5,7 +5,7 @@ public class FigureFormat {
     private boolean darkening;
     private boolean hMirroring;
     private boolean vMirroring;
-    private boolean selected = false;
+    private boolean selected;
     private RGBColor fillColor;
     private BorderType border;
 
