@@ -9,11 +9,6 @@ public class Circle extends Ellipse {
         super(centerPoint, 2 * radius, 2 * radius, fillColor,drawer);
     }
 
-    public void drawSelf(){
-        double diameter = getRadius() * 2;
-        getDrawer().drawEllipse(this);
-
-    }
 
     @Override
     public String toString() {

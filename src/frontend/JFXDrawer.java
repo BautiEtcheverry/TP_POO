@@ -40,7 +40,6 @@ public class JFXDrawer implements Drawers{
     public void drawEllipse(Ellipse ellipse){
         // Guardar el estilo del borde
         BorderType borderType = ellipse.getFormat().getBorderType();
-        boolean isSelected = ellipse.getFormat().isSelected();
 
         // Dibujar todos los rellenos primero
         gc.setFill(toColor(ellipse.getFormat().getFillColor()));
@@ -61,7 +60,7 @@ public class JFXDrawer implements Drawers{
         }
 
         // Finalmente, dibujar el borde de la figura original
-        applyStrokeStyle(borderType, isSelected);
+        applyStrokeStyle(borderType);
         paintEllipseStroke(ellipse.getCenterPoint(), ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
 
     }
@@ -71,7 +70,6 @@ public class JFXDrawer implements Drawers{
     public void drawRectangle(Rectangle rectangle){
         // Guardar el estilo del borde
         BorderType borderType = rectangle.getFormat().getBorderType();
-        boolean isSelected = rectangle.getFormat().isSelected();
 
         // Dibujar todos los rellenos primero
         gc.setFill(toColor(rectangle.getFormat().getFillColor()));
@@ -94,7 +92,7 @@ public class JFXDrawer implements Drawers{
         }
 
         // Finalmente, dibujar el borde de la figura original
-        applyStrokeStyle(borderType, isSelected);
+        applyStrokeStyle(borderType);
         paintRectangleStroke(rectangle.getTopLeft(), rectangle.getBottomRight());
 
     }
@@ -113,7 +111,7 @@ public class JFXDrawer implements Drawers{
         double mirroredX = centerPoint.getX() + sMayorAxis;
         Point mirroredCenter = new Point(mirroredX, centerPoint.getY());
         paintEllipseFill(mirroredCenter, sMayorAxis, sMinorAxis);
-        applyStrokeStyle(BorderType.NORMAL, false);
+        applyStrokeStyle(BorderType.NORMAL);
         paintEllipseStroke(mirroredCenter, sMayorAxis , sMinorAxis);
     }
 
@@ -123,7 +121,7 @@ public class JFXDrawer implements Drawers{
         Point newTopLeft = new Point(newTopLeftX, topLeft.getY());
         Point newBottomRight = new Point(newTopLeftX + width, bottomRight.getY());
         paintRectangleFill(newTopLeft,newBottomRight);
-        applyStrokeStyle(BorderType.NORMAL, false);
+        applyStrokeStyle(BorderType.NORMAL);
         paintRectangleStroke(newTopLeft, newBottomRight);
 
     }
@@ -134,7 +132,7 @@ public class JFXDrawer implements Drawers{
         Point newBottomRight = new Point(bottomRight.getX(),topLeft.getY());
         Point newTopLeft = new Point(topLeft.getX(),newTopLeftY);
         paintRectangleFill(newTopLeft, newBottomRight);
-        applyStrokeStyle(BorderType.NORMAL, false);
+        applyStrokeStyle(BorderType.NORMAL);
         paintRectangleStroke(newTopLeft, newBottomRight);
     }
 
@@ -142,12 +140,12 @@ public class JFXDrawer implements Drawers{
         double mirroredY = centerPoint.getY() + sMinorAxis;
         Point mirroredCenter = new Point(centerPoint.getX(), mirroredY);
         paintEllipseFill(mirroredCenter, sMayorAxis, sMinorAxis);
-        applyStrokeStyle(BorderType.NORMAL, false);
+        applyStrokeStyle(BorderType.NORMAL);
         paintEllipseStroke(mirroredCenter, sMayorAxis, sMinorAxis);
 
     }
 
-    private void applyStrokeStyle(BorderType type, boolean selected) {
+    private void applyStrokeStyle(BorderType type) {
         if (type == null) {
             type = BorderType.NORMAL;
         }

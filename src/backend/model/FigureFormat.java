@@ -5,7 +5,6 @@ public class FigureFormat {
     private boolean darkening;
     private boolean hMirroring;
     private boolean vMirroring;
-    private boolean selected;
     private RGBColor fillColor;
     private BorderType border;
 
@@ -30,9 +29,6 @@ public class FigureFormat {
     public boolean hasVMirroring(){
         return  vMirroring;
     }
-    public boolean isSelected(){
-        return selected;
-    }
     public BorderType getBorderType(){
         return border;
     }
@@ -50,9 +46,6 @@ public class FigureFormat {
     }
     public void setVMirroring(boolean state){
         vMirroring = state;
-    }
-    public void setSelected(boolean state){
-        selected = state;
     }
     public void setFormat(FigureFormat otherFigure){
         otherFigure.setFillColorRGB(getFillColor());
