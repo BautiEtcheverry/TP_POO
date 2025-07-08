@@ -51,20 +51,27 @@ public class PaintPane extends BorderPane {
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
+
 		ToggleButton[] ActionArr = {selectionButton,deleteButton};
+
+		//instancio los botones que crean las figuras
 		FigureBottoms figuresBtm = new FigureBottoms();
+
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : ActionArr) {
 			tool.setPrefWidth(90);
 			tool.setToggleGroup(tools);
 			tool.setCursor(Cursor.HAND);
 		}
+
 		VBox buttonsBox = new VBox(10);
 		this.setLeft(buttonsBox);
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setAlignment(Pos.TOP_CENTER);
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
+
+		//se añaden los botones a la toolBar
 		buttonsBox.getChildren().add(selectionButton);
 		buttonsBox.getChildren().addAll(figuresBtm.getBottomGroup());
 		buttonsBox.getChildren().add(deleteButton);
@@ -84,6 +91,7 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			}
 		});
+
 		// ---------Panel Derecho---------
 		VBox rightPanel = new VBox(10);
 		rightPanel.setStyle("-fx-background-color: #999");
@@ -199,14 +207,12 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMouseReleased(event -> {
 			Point endPoint = new Point(event.getX(), event.getY());
-			if (startPoint == null) {
+			if (startPoint == null || selectionButton.isSelected()){
 				return;
 			}
 			if (endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
 				return;
 			}
-
-			//-------------------------------------------------------------------------------------
 
 			Color color = fillColorPicker.getValue();
 			RGBColor figureColor = new RGBColor(color.getRed(), color.getGreen(), color.getBlue(), color.getOpacity());
@@ -217,9 +223,6 @@ public class PaintPane extends BorderPane {
 			}
 
 			Figure newFigure = builder.builder(startPoint, endPoint,figureColor,drawer);
-
-			// --------------------------------------------------------------------------------------
-
 			newFigure.getFormat().setLightening(lighteningCheckBox.isSelected());
 			newFigure.getFormat().setDarkening(darkeningCheckBox.isSelected());
 			newFigure.getFormat().setHMirroring(hMirroringCheckBox.isSelected());
