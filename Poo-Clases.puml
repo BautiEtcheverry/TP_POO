@@ -1,0 +1,225 @@
+@startuml
+skinparam classFontSize 12
+skinparam classBackgroundColor #FDF6E3
+
+' ------------------------
+' ENUMS
+enum BorderType {
+    NORMAL
+    PIXELADO
+    PUNTEADO_FINO
+    PUNTEADO_COMPLEJO
+}
+
+' ------------------------
+' INTERFACES
+interface Drawers {
+    +drawEllipse(Ellipse)
+    +drawRectangle(Rectangle)
+    +drawVerticalMirrorEllipse(Point, double, double)
+    +drawHorizontalMirrorEllipse(Point, double, double)
+    +drawVerticalMirrorRectangle(Point, Point)
+    +drawHorizontalMirrorRectangle(Point, Point)
+}
+
+interface FigureBuilder <<FunctionalInterface>> {
+    +Figure builder(Point, Point, RGBColor, Drawers)
+}
+
+' ------------------------
+' CLASES BÁSICAS
+class Point {
+    -x : double
+    -y : double
+    +getX() : double
+    +getY() : double
+    +changeX(double)
+    +changeY(double)
+}
+
+class RGBColor {
+    -red : double
+    -green : double
+    -blue : double
+    -opacity : double
+    +getRed()
+    +getGreen()
+    +getBlue()
+    +getOpacity()
+}
+
+class FigureFormat {
+    - lightening: boolean
+    - darkening: boolean
+    - hMirroring: boolean
+    - vMirroring: boolean
+    - fillColor: RGBColor
+    - border: BorderType
+
+    + setFillColor(red: double, green: double, blue: double, opacity: double): void
+    + setFillColorRGB(color: RGBColor): void
+    + getFillColor(): RGBColor
+    + hasLightening(): boolean
+    + hasDarkening(): boolean
+    + hasHMirroring(): boolean
+    + hasVMirroring(): boolean
+    + getBorderType(): BorderType
+    + setBorderType(borderType: BorderType): void
+    + setLightening(state: boolean): void
+    + setDarkening(state: boolean): void
+    + setHMirroring(state: boolean): void
+    + setVMirroring(state: boolean): void
+    + setFormat(otherFigure: FigureFormat): void
+}
+
+' ------------------------
+' FIGURE Y SUBCLASES
+abstract class Figure {
+    -format : FigureFormat
+    -drawer : Drawers
+    +drawSelf()
+    +clone(double, double) : Figure
+    +divideHorizontal(int, int) : Figure
+    +divideVertical(int, int) : Figure
+    +move(double, double)
+    +moveTo(double, double)
+    +Belongs(Point) : boolean
+    +getDrawer()
+    +getFormat()
+}
+
+class Rectangle {
+    -topLeft : Point
+    -bottomRight : Point
+}
+
+class Square {
+}
+
+class Ellipse {
+    -centerPoint : Point
+    -sMayorAxis : double
+    -sMinorAxis : double
+}
+
+class Circle {
+    +getRadius() : double
+}
+
+Figure <|-- Rectangle
+Rectangle <|-- Square
+Figure <|-- Ellipse
+Ellipse <|-- Circle
+
+' ------------------------
+' BUILDERS
+class RectangleBuilder
+class SquareBuilder
+class CircleBuilder
+class EllipseBuilder
+
+FigureBuilder <|.. RectangleBuilder
+FigureBuilder <|.. SquareBuilder
+FigureBuilder <|.. CircleBuilder
+FigureBuilder <|.. EllipseBuilder
+
+' ------------------------
+' DIBUJADOR
+class JFXDrawer {
+    -gc : GraphicsContext
+    -fillColorPicker : ColorPicker
+}
+
+JFXDrawer ..|> Drawers
+
+' ------------------------
+' LOGIC / STATE
+class CanvasState {
+    -list : Collection<Figure>
+    +addFigure(Figure)
+    +deleteFigure(Figure)
+    +figures() : Iterable<Figure>
+}
+
+class Formater {
+    -lastFormat : FigureFormat
+    -formatCopied : boolean
+    +copy(Figure)
+    +paste(Figure)
+    +hasFormat() : boolean
+}
+
+class FigureButtons {
+    -rectangleButton : ToggleButton
+    -tools : ToggleGroup
+    -figureBuilderMap : Map<ToggleButton, FigureBuilder>
+    +getBuilder() : FigureBuilder
+    +getBottomGroup() : ToggleButton[]
+}
+
+' ------------------------
+' UI
+class PaintPane {
+    -canvasState : CanvasState
+    -gc : GraphicsContext
+    -selectedFigure : Figure
+    -drawer : Drawers
+    +redrawCanvas()
+}
+
+class StatusPane {
+    -statusLabel : Label
+    +updateStatus(String)
+}
+
+class MainFrame {
+}
+
+class AppMenuBar {
+}
+
+class MoveFigure {
+    +show(Figure, Runnable)
+}
+
+class MultiplyFigure {
+    +show(Figure, Consumer<List<Figure>>)
+}
+
+class DivideFigure {
+    +show(boolean, Figure, Consumer<List<Figure>>)
+}
+
+class AppLauncher {
+    +main(String[])
+}
+
+MainFrame --> PaintPane
+MainFrame --> StatusPane
+AppLauncher --> MainFrame
+PaintPane --> CanvasState
+PaintPane --> Drawers
+PaintPane --> StatusPane
+PaintPane --> Formater
+PaintPane --> FigureButtons
+PaintPane --> FigureBuilder
+PaintPane --> RGBColor
+PaintPane --> BorderType
+PaintPane --> Point
+
+PaintPane --> MoveFigure
+PaintPane --> DivideFigure
+PaintPane --> MultiplyFigure
+
+Figure --> FigureFormat
+Figure --> Drawers
+FigureFormat --> RGBColor
+FigureFormat --> BorderType
+
+' Builders usan figuras
+RectangleBuilder --> Rectangle
+SquareBuilder --> Square
+CircleBuilder --> Circle
+EllipseBuilder --> Ellipse
+
+@enduml
