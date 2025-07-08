@@ -1,6 +1,7 @@
 package backend.model;
 
 
+import backend.Drawers;
 import org.w3c.dom.html.HTMLImageElement;
 
 import java.io.FileFilter;
@@ -9,9 +10,10 @@ public class Rectangle extends Figure {
 
     private final Point topLeft, bottomRight;
 
-    public Rectangle(Point topLeft, Point bottomRight, RGBColor fillColor) {
+    public Rectangle(Point topLeft, Point bottomRight, RGBColor fillColor, Drawers drawer) {
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
+        setDrawer(drawer);
         getFormat().setFillColorRGB(fillColor);
     }
 

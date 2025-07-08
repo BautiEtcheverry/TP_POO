@@ -1,10 +1,12 @@
 package backend.model;
 
 
+import backend.Drawers;
+
 public class Circle extends Ellipse {
 
-    public Circle(Point centerPoint, double radius, RGBColor fillColor) {
-        super(centerPoint, 2 * radius, 2 * radius, fillColor);
+    public Circle(Point centerPoint, double radius, RGBColor fillColor, Drawers drawer) {
+        super(centerPoint, 2 * radius, 2 * radius, fillColor,drawer);
     }
 
     public void drawSelf(){
