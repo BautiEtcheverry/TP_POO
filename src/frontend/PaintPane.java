@@ -17,12 +17,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
-import java.util.Map;
-
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-
-
 public class PaintPane extends BorderPane {
 	// BackEnd
 	private final CanvasState canvasState;
@@ -38,8 +32,6 @@ public class PaintPane extends BorderPane {
 	private final CheckBox darkeningCheckBox = new CheckBox("Oscurecimiento");
 	private final CheckBox hMirroringCheckBox = new CheckBox("Espejo Horizontal");
 	private final CheckBox vMirroringCheckBox = new CheckBox("Espejo Vertical");
-
-
 
 	// Selector de color de relleno
 	private final ColorPicker fillColorPicker = new ColorPicker(Color.YELLOW);
@@ -213,7 +205,9 @@ public class PaintPane extends BorderPane {
 			if (endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
 				return;
 			}
+
 			//-------------------------------------------------------------------------------------
+
 			Color color = fillColorPicker.getValue();
 			RGBColor figureColor = new RGBColor(color.getRed(), color.getGreen(), color.getBlue(), color.getOpacity());
 			FigureBuilder builder = figuresBtm.getBuilder();
@@ -345,19 +339,16 @@ public class PaintPane extends BorderPane {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		gc.setLineWidth(10);
 
-
 		for (Figure figure : canvasState.figures()) {
 			if(figure==selectedFigure){
 				gc.setStroke(Color.RED);
 			}else{
 				gc.setStroke(Color.BLACK);
 			}
-
 			//gc.setFill(fillColorPicker.getValue());
 			figure.drawSelf();
 		}
 	}
-
 }
 
 

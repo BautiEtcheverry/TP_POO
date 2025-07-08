@@ -1,20 +1,14 @@
 package frontend;
 
-import backend.model.Figure;
 import  backend.model.FigureBuilders.FigureBuilder;
 import backend.model.FigureBuilders.CircleBuilder;
 import backend.model.FigureBuilders.EllipseBuilder;
 import backend.model.FigureBuilders.RectangleBuilder;
 import backend.model.FigureBuilders.SquareBuilder;
-import backend.model.Square;
 import javafx.scene.Cursor;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-
-import javax.swing.plaf.basic.BasicBorders;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 public class FigureBottoms {
@@ -23,7 +17,7 @@ public class FigureBottoms {
     private final ToggleButton circleButton = new ToggleButton("Círculo");
     private final ToggleButton ellipseButton = new ToggleButton("Elipse");
     private final ToggleGroup tools = new ToggleGroup();
-    private Map<ToggleButton, FigureBuilder> figureBuilderMap;
+    private final Map<ToggleButton, FigureBuilder> figureBuilderMap;
     private ToggleButton[] toolsArr = {rectangleButton, squareButton, circleButton, ellipseButton};
 
     public FigureBottoms(){
@@ -39,7 +33,6 @@ public class FigureBottoms {
                 ellipseButton ,new EllipseBuilder(),
                 circleButton, new CircleBuilder()
         );
-
     }
 
     public FigureBuilder getBuilder(){
@@ -50,10 +43,7 @@ public class FigureBottoms {
         return figureBuilderMap.get(bottomSelected);
     }
 
-
-
     public ToggleButton[] getBottomGroup(){
         return this.toolsArr;
     }
-
 }
