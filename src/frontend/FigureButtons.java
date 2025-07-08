@@ -26,7 +26,7 @@ public class FigureButtons {
     private Runnable onDeleteAction;
     private Figure selectedFigure;
     private final Map<ToggleButton, FigureBuilder> figureBuilderMap;
-    private ToggleButton[] toolsArr = {rectangleButton, squareButton, circleButton, ellipseButton};
+    private final ToggleButton[] toolsArr = {rectangleButton, squareButton, circleButton, ellipseButton};
 
     public FigureButtons(){
         for (ToggleButton tool : toolsArr) {
@@ -47,22 +47,16 @@ public class FigureButtons {
         selectionButton.setCursor(Cursor.HAND);
         deleteButton.setPrefWidth(90);
         deleteButton.setCursor(Cursor.HAND);
-        if(selectedFigure != null) {
-            System.out.println("ayuda entro todita");
-            deleteButton.setOnAction(actionEvent -> onDeleteAction.run());
-        }
+        deleteButton.setOnAction(actionEvent -> onDeleteAction.run());
+
 
     }
 
     public ToggleButton getSelectionButton(){return this.selectionButton;}
     public ToggleButton getDeleteButton(){return this.deleteButton;}
 
-    public void setOnDeleteAction(Figure figure,Runnable action) {
+    public void setOnDeleteAction(Runnable action) {
         this.onDeleteAction = action;
-        if(figure == null){
-            System.out.println("me llego null virgo");
-        }
-        this.selectedFigure = figure;
     }
 
     public boolean getSelectionStatus(){return selectionButton.isSelected();}

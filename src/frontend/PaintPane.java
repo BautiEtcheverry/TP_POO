@@ -292,7 +292,7 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
-		figuresBtm.setOnDeleteAction(selectedFigure,() -> {
+		figuresBtm.setOnDeleteAction(() -> {
 			if (selectedFigure != null) {
 				canvasState.deleteFigure(selectedFigure);
 				selectedFigure = null;
