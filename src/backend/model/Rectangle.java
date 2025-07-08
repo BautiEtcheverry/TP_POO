@@ -1,6 +1,7 @@
 package backend.model;
 
 
+import backend.Drawers;
 import org.w3c.dom.html.HTMLImageElement;
 
 import java.io.FileFilter;
@@ -9,9 +10,10 @@ public class Rectangle extends Figure {
 
     private final Point topLeft, bottomRight;
 
-    public Rectangle(Point topLeft, Point bottomRight, RGBColor fillColor) {
+    public Rectangle(Point topLeft, Point bottomRight, RGBColor fillColor, Drawers drawer) {
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
+        setDrawer(drawer);
         getFormat().setFillColorRGB(fillColor);
     }
 
@@ -49,7 +51,7 @@ public class Rectangle extends Figure {
         Rectangle newFigure = new Rectangle(
                 new Point(topLeft.getX()+offsetX, topLeft.getY()+offsetY),
                 new Point(bottomRight.getX()+offsetX, bottomRight.getY()+offsetY),
-                getFormat().getFillColor());
+                getFormat().getFillColor(),getDrawer());
         setProperties(newFigure);
         return newFigure;
     }
@@ -64,7 +66,7 @@ public class Rectangle extends Figure {
         double YCoordinateBR = middle + height/2;
         Point newCoordinateTopLeft = new Point( startX,YCoordinateTL);
         Point newCoordinateBottomRight = new Point(startX + length, YCoordinateBR);
-        Rectangle newFigure = new Rectangle(newCoordinateTopLeft,newCoordinateBottomRight, getFormat().getFillColor());
+        Rectangle newFigure = new Rectangle(newCoordinateTopLeft,newCoordinateBottomRight, getFormat().getFillColor(),getDrawer());
         setProperties(newFigure);
         return  newFigure;
     }
@@ -78,7 +80,7 @@ public class Rectangle extends Figure {
         double XCoordinateBR = middle + length/2;
         Point newCoordinateTopLeft = new Point( XCoordinateTL, startY - height );
         Point newCoordinateBottomRight = new Point(XCoordinateBR, startY);
-        Rectangle newFigure = new Rectangle(newCoordinateTopLeft,newCoordinateBottomRight, getFormat().getFillColor());
+        Rectangle newFigure = new Rectangle(newCoordinateTopLeft,newCoordinateBottomRight, getFormat().getFillColor(),getDrawer());
         setProperties(newFigure);
         return newFigure;
     }

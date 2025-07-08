@@ -1,10 +1,12 @@
 package backend.model;
 
 
+import backend.Drawers;
+
 public class Square extends Rectangle {
 
-    public Square(Point topLeft, double size, RGBColor fillColor) {
-       super(topLeft,new Point(topLeft.getX() + size, topLeft.getY() + size), fillColor);
+    public Square(Point topLeft, double size, RGBColor fillColor, Drawers drawer) {
+       super(topLeft,new Point(topLeft.getX() + size, topLeft.getY() + size), fillColor, drawer);
     }
 
     public void drawSelf(){getDrawer().drawRectangle(this);}
