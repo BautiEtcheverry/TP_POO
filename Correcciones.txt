@@ -9,7 +9,6 @@ Diseño Back-End
 Bien familia de clases FigureBuilder
 
 Mal diseño que los efectos sean variables de instancia boolean. Mejor un enum de efectos y un EnumSet con los efectos activados
-```
 public class FigureFormat {
    private boolean lightening;
    private boolean darkening;
@@ -17,16 +16,15 @@ public class FigureFormat {
    private boolean vMirroring;
    private RGBColor fillColor;
    private BorderType border;
-```
 
 Bien la clase abstracta Figure
-```
+
 import backend.Drawers;
 
 public abstract class Figure {
    private FigureFormat format = new FigureFormat();
    private Drawers drawer;
-```
+
 
 Bien Point con changeX y changeY
 Bien RGBColor para correcta separación front/back
@@ -37,15 +35,15 @@ divideVertical y divideHorizontal repiten código. Faltó modularización. Al me
 Diseño Front-End
 
 Bien figureBuilderMap
-```
+
 private final Map<ToggleButton, FigureBuilder> figureBuilderMap;
-```
+
 
 (Se debe evitar el instanceof ToggleButton en FigureButtons)
 En JFXDrawer los métodos drawEllipse y drawRectangle repiten código. Faltó modularización
 
 (Arrastra error de back. Estar preguntando por cada efecto para ver si está encendido para lograr el comportamiento esperado es imperativo)
-```
+
 if(ellipse.getFormat().hasLightening()) {
    gc.setFill(CLARIFICATION);
    paintEllipseFill(ellipse.getCenterPoint(), ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
@@ -54,10 +52,10 @@ if(ellipse.getFormat().hasDarkening()) {
    gc.setFill(DARKENING);
    paintEllipseFill(ellipse.getCenterPoint(), ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
 }
-```
+
 
 applyStokeStyle usa un switch y es imperativo. Switch no se ajusta al paradigma. Se esperaba un enum de bordes de front donde asocie cada borde con la lógica
-```
+
 switch (type) {
    case NORMAL -> {
        gc.setLineWidth(1);
@@ -69,14 +67,14 @@ switch (type) {
        gc.setLineCap(javafx.scene.shape.StrokeLineCap.BUTT);
        gc.setLineDashes(1, 1);
    }
-```
+
 
 En PaintPane algunos setOnAction repiten código. En general es: 
 1. Validar que la figura seleccionada no es null 
 2. Operación correspondiente
 3. Redraw Canvas
 Faltó modularización.
-```
+
 lighteningCheckBox.setOnAction(event -> {
    if (selectedFigure != null) {
       selectedFigure.getFormat().setLightening(lighteningCheckBox.isSelected());
@@ -90,7 +88,7 @@ darkeningCheckBox.setOnAction(event -> {
       redrawCanvas();
    }
 });
-```
+
 
 Bien claro el redrawCanvas
  
